@@ -30,8 +30,9 @@ def get_img_as_base64(file):
         data = f.read()
     return base64.b64encode(data).decode()
 
-img = get_img_as_base64('imgs/bg.jpg')
+img = get_img_as_base64('imgs/pexels-dreamypixel-547115.jpg')
 img1 = get_img_as_base64('imgs/pexels-dreamypixel-547115.jpg')
+img3 = get_img_as_base64('imgs/study.jpg')
 
 page_bg_img = f"""
 <style>
@@ -47,7 +48,7 @@ page_bg_img = f"""
         background-position: center; 
         background-repeat: no-repeat;
         background-attachment: fixed;
-        opacity: 0.6;
+        opacity: 0.5;
         position: absolute;
         top: 0;
         left: 0;
@@ -63,17 +64,8 @@ page_bg_img = f"""
         background-color: rgba(0, 0, 0, 0.0);
     }}
     [data-testid="stMarkdownContainer"] p{{
-        color: white;
+
     }}
-
-    # [data-testid="StyledLinkIconContainer"] {{
-    #     width: 100%;
-    #     height: 100%;
-    #     display: flex;
-    #     justify-content: center;
-    #     align-items: center;
-    # }}
-
     .home-text {{
         font-family: 'Arial', sans-serif;
         font-size: 60px;
@@ -91,6 +83,14 @@ page_bg_img = f"""
         text-align: center;
         padding: 0px 0px 0px 0px;
     }}
+    .lecturer {{
+        font-family: 'Arial', sans-serif;
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+        text-align: center;
+        padding: 0px 0px 0px 0px;
+    }}
     .line {{
         font-family: 'Arial', sans-serif;
         font-size: 50px;
@@ -98,16 +98,58 @@ page_bg_img = f"""
         color: white;
         text-align: center;
         padding: 0px 0px 0px 0px;
-    }}    
+    }}
+    .new-page {{
+        margin-top: 490px; /* Adjust this value as needed for spacing */
+        margin-left: 50px;
+        margin-right: 50px;
+        border-radius: 25px;
+        border : 2px solid #000000;
+        background-color: rgba(255, 255, 255, 0.8);
+    }}
+    .home-paragraph {{
+        font-family: 'Arial', sans-serif;
+        font-size: 18px;
+        color: black;
+        margin: 20px 0px;
+        text-align: justify;
+        text-indent: 50px;
+        padding: 10px 40px;
+    }}
+    .home-paragraph-title {{
+        font-family: 'Arial', sans-serif;
+        font-size: 50px;
+        font-weight: bold;
+        color: black;
+        margin: 10px 0px;
+        text-align: center;
+    }}
 </style>
 """
-
 
 # Define the different pages
 def home():
     st.markdown(page_bg_img, unsafe_allow_html=True)
-    st.markdown("<h1 class='home-text'>Sleep health & lifestyle</h1><p class='line'>____________________________</p><br><h2 class='subtitle'>Python project 2</h2>", unsafe_allow_html=True)
+    st.markdown("<h1 class='home-text'>Sleep Health & Lifestyle<br>____________________________</h1><br><h2 class='subtitle'>Python project 2 - Group 4 - Afternoon class</h2><br><h3 class='lecturer'> Lecturer: Dr. Do Duc Tan</h3>", unsafe_allow_html=True)
 
+# Add your paragraph here
+    st.markdown(f"""
+        <div class='new-page'>
+            <h2 class='home-paragraph-title'>Introduction</h2>
+            <div class='home-paragraph'>
+                <div style="display: flex; flex-direction: row; align-items: flex-start;">
+                    <div style="flex: 1; padding-right: 20px;">
+                        <p>This document, produced by Group 4 under the supervision of Dr. Do Duc Tan, investigates the relationship between sleep health and lifestyle. Using the statistical software R, our group examined a detailed dataset (consisting of 13 columns and 375 rows) to reveal insights concerning sleep quality, stress levels, sleep duration, as well as their correlations with gender, age, and occupation.</p>
+                        <p>The report features visually appealing graphs created using R Studio, along with thorough explanations, offering a comprehensive interpretation of the data's significance for sleep health and lifestyle. Exercises from the book "R for Data Science" are included to strengthen understanding and provide practical examples.</p>
+                        <p>This report highlights the hard work and knowledge of Group 4 under Dr. Tan Duc Do's supervision, with the goal of deepening our comprehension of sleep health and lifestyle to promote well-being and sustain a healthy lifestyle. </p>
+                    </div>
+                    <div style="flex: 1; ">
+                        <img src="data:image/png;base64,{img3}" style="width: 90%; height: auto;"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
 
 def datasetPage():
     st.title("Dataset")
