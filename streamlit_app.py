@@ -15,6 +15,7 @@ from app11 import *
 from app12 import *
 from app13 import *
 import base64
+
 # Set the page config to wide layout
 st.set_page_config(layout="wide")
 
@@ -32,8 +33,10 @@ def get_img_as_base64(file):
 
 img = get_img_as_base64('imgs/pexels-dreamypixel-547115.jpg')
 img1 = get_img_as_base64('imgs/pexels-dreamypixel-547115.jpg')
-img3 = get_img_as_base64('imgs/study.jpg')
-
+img3 = get_img_as_base64('imgs/Working2.jpg')
+img4 = get_img_as_base64('imgs/6592658.jpg')
+img5 = get_img_as_base64('imgs/keyfeature.jpg')
+img6 = get_img_as_base64('imgs/mindmap.jpg')
 page_bg_img = f"""
 <style>
     .main {{
@@ -67,7 +70,7 @@ page_bg_img = f"""
 
     }}
     .home-text {{
-        font-family: 'Arial', sans-serif;
+        font-family: 'Nunito', sans-serif;
         font-size: 60px;
         font-weight: bold;
         color: white;
@@ -76,7 +79,7 @@ page_bg_img = f"""
         margin: 0px 0px 0px 0px;
     }}
     .subtitle {{
-        font-family: 'Arial', sans-serif;
+        font-family: 'Nunito', sans-serif;
         font-size: 30px;
         font-weight: bold;
         color: white;
@@ -84,7 +87,7 @@ page_bg_img = f"""
         padding: 0px 0px 0px 0px;
     }}
     .lecturer {{
-        font-family: 'Arial', sans-serif;
+        font-family: 'Nunito', sans-serif;
         font-size: 20px;
         font-weight: bold;
         color: white;
@@ -103,26 +106,51 @@ page_bg_img = f"""
         margin-top: 490px; /* Adjust this value as needed for spacing */
         margin-left: 50px;
         margin-right: 50px;
-        border-radius: 25px;
-        border : 2px solid #000000;
-        background-color: rgba(255, 255, 255, 0.8);
     }}
-    .home-paragraph {{
-        font-family: 'Arial', sans-serif;
+    .home-paragraph1 {{
+        font-family: 'Montserrat Classic', sans-serif;
         font-size: 18px;
         color: black;
         margin: 20px 0px;
         text-align: justify;
         text-indent: 50px;
         padding: 10px 40px;
+        border-radius: 25px;
+        border : 2px solid #000000;
+        background-color: rgba(255, 255, 255, 0.8);
     }}
-    .home-paragraph-title {{
-        font-family: 'Arial', sans-serif;
+    .home-paragraph1 .home-paragraph-title {{
+        font-family: 'Times', sans-serif;
         font-size: 50px;
         font-weight: bold;
         color: black;
         margin: 10px 0px;
         text-align: center;
+    }}
+
+    .home-paragraph2 {{
+        font-family: 'Nunito', sans-serif;
+        font-size: 18px;
+        color: black;
+        text-align: justify;
+        text-indent: 50px;
+        border-radius: 25px;
+        border : 2px solid #000000;
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 10px 40px;
+    }}
+
+    .home-paragraph2 .home-paragraph-title {{
+        font-family: 'Times', sans-serif;
+        font-size: 50px;
+        font-weight: bold;
+        color: black;
+        text-align: center;
+    }}
+
+    .home-image {{
+        margin-top: 100px;
+        margin-bottom: 100px;
     }}
 </style>
 """
@@ -132,13 +160,13 @@ def home():
     st.markdown(page_bg_img, unsafe_allow_html=True)
     st.markdown("<h1 class='home-text'>Sleep Health & Lifestyle<br>____________________________</h1><br><h2 class='subtitle'>Python project 2 - Group 4 - Afternoon class</h2><br><h3 class='lecturer'> Lecturer: Dr. Do Duc Tan</h3>", unsafe_allow_html=True)
 
-# Add your paragraph here
+# Add paragraph 
     st.markdown(f"""
         <div class='new-page'>
-            <h2 class='home-paragraph-title'>Introduction</h2>
-            <div class='home-paragraph'>
+            <div class='home-paragraph1'>
+                <h2 class='home-paragraph-title'>Introduction</h2>
                 <div style="display: flex; flex-direction: row; align-items: flex-start;">
-                    <div style="flex: 1; padding-right: 20px;">
+                    <div style="flex: 1; padding-right: 25px;">
                         <p>This document, produced by Group 4 under the supervision of Dr. Do Duc Tan, investigates the relationship between sleep health and lifestyle. Using the statistical software R, our group examined a detailed dataset (consisting of 13 columns and 375 rows) to reveal insights concerning sleep quality, stress levels, sleep duration, as well as their correlations with gender, age, and occupation.</p>
                         <p>The report features visually appealing graphs created using R Studio, along with thorough explanations, offering a comprehensive interpretation of the data's significance for sleep health and lifestyle. Exercises from the book "R for Data Science" are included to strengthen understanding and provide practical examples.</p>
                         <p>This report highlights the hard work and knowledge of Group 4 under Dr. Tan Duc Do's supervision, with the goal of deepening our comprehension of sleep health and lifestyle to promote well-being and sustain a healthy lifestyle. </p>
@@ -147,6 +175,29 @@ def home():
                         <img src="data:image/png;base64,{img3}" style="width: 90%; height: auto;"/>
                     </div>
                 </div>
+            </div>
+            <div class='home-image'>
+                <img src="data:image/png;base64,{img6}" style="width: 100%; height: auto;"/>
+            </div>
+            <div class='home-paragraph2'>
+                <h3 class='home-paragraph-title'>What do we want to explore from it?</h3>
+                <div style="display: flex; flex-direction: row; align-items: flex-start;">
+                    <div style="flex: 1; padding-right: 10px;">
+                        <p>- The Sleep Quality Sweet Spot: Does sleep duration impact quality? Is there an optimal number of hours for the best sleep? (Visualized with scatter plots)</p>
+                        <p>- Occupation and Sleep: Do different occupations affect sleep patterns? We'll compare average sleep duration and quality across various professions.</p>
+                        <p>- Physical Activity and Sleep Health: Is there a link between physical activity levels and sleep quality or duration? We'll use correlation analysis to quantify any associations.</p>
+                        <p>- Stress and Sleep: Does stress affect how long or how well we sleep? We'll use linear regression analysis to explore this relationship.</p>
+                        <p>- Body Mass Index and Sleep: Is there a connection between weight and sleep health? We'll analyze this visually and statistically using the BMI categories.</p>
+                        <p>- Physiology and Sleep: Do physiological parameters like blood pressure and heart rate reveal sleep disturbances? We'll use appropriate statistical tests to investigate this. </p>
+                        <p>- Sleep Disorders: How prevalent are sleep disorders within the dataset? Are there common characteristics among individuals with the same disorder?</p>
+                    </div>
+                    <div style="flex: 1;">
+                        <img src="data:image/png;base64,{img4}" style="width: 90%; height: auto;"/>
+                    </div>
+                </div>
+            </div>
+            <div class='home-image'>
+                <img src="data:image/png;base64,{img5}" style="width: 100%; height: auto;"/>
             </div>
         </div>
     """, unsafe_allow_html=True)
