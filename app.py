@@ -1,37 +1,42 @@
-import seaborn as sns
-import matplotlib.pyplot as plt
+import plotly.express as px
 import pandas as pd
 
-
-def plot1():
+def plot1(jobs):
     # Read the CSV file
     my_data = pd.read_csv("health.csv")
 
-    # Get unique occupations and assign unique colors to each
-    unique_occupations = my_data['Occupation'].unique()
+    # Filter data for the specified occupations
+    filtered_data = my_data[my_data['Occupation'].isin(jobs)]
 
-    # Create a dictionary that maps each occupation to a unique color
-    occupation_colors = sns.color_palette("husl", n_colors=len(unique_occupations))
+    # Create the plot
+    fig = px.bar(filtered_data,
+                 x='Gender',
+                 y='Sleep Duration',
+                 color='Occupation',
+                 barmode='group',  # Group bars for comparison
+                 category_orders={'Gender': ['Male', 'Female']},
+                 color_discrete_sequence=px.colors.qualitative.Plotly,
+                 height=600,        # Adjust height for better display
+                 width=800)         # Adjust width for better display
 
-    # Create a dictionary that maps each occupation to a unique color
-    occupation_color_dict = dict(zip(unique_occupations, occupation_colors))
+    # Update the layout
+    fig.update_layout(
+        title=f'Relationship between Gender and Sleep Duration for {", ".join(jobs)}',
+        xaxis_title='Gender',
+        yaxis_title='Average Sleep Duration (hours)',
+        margin=dict(t=50),
+        font=dict(size=12),
+        legend_title_text='Occupation'
+    )
 
-    gender_order = ["Male", "Female"]
-    g = sns.FacetGrid(my_data, col="Occupation", col_wrap=4, height=4)
+    # Update traces for better aesthetics
+    fig.update_traces(
+        marker=dict(line=dict(width=0.5, color='DarkSlateGrey')),
+        opacity=0.8
+    )
 
-    # Map a bar plot onto the grid
-    for occupation, color in occupation_color_dict.items():
-        sns.barplot(data=my_data[my_data['Occupation'] == occupation], x="Gender", y="Sleep Duration", order=gender_order, estimator='mean', ci=None, color=color, ax=g.axes[unique_occupations.tolist().index(occupation)])
+    # Adjust the x-axis and y-axis to make the plots more readable
+    fig.update_xaxes(tickfont=dict(size=14))
+    fig.update_yaxes(tickfont=dict(size=14))
 
-    # Set titles for each plot
-    for ax, title in zip(g.axes.flat, unique_occupations):
-        ax.set_title(title)
-
-    # Set common title and axis labels
-    g.fig.suptitle("Relationship between Gender, Occupation, and Sleep Duration", y=1.05)
-
-    # Adjust the layout
-    plt.tight_layout()
-
-    return g.fig
-
+    return fig
