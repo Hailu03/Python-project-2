@@ -15,6 +15,14 @@ from app11 import *
 from app12 import *
 from app13 import *
 import base64
+from streamlit_lottie import st_lottie
+import json
+
+def load_lottiefile(file_path:str):
+    with open(file_path, "r", encoding="utf-8") as f:
+        return json.load(f)
+lottie_sleep = load_lottiefile("imgs/16.json")
+lottie_octo = load_lottiefile("imgs/octobus.json")
 
 df = pd.read_csv('health.csv')
 
@@ -28,23 +36,20 @@ with st.sidebar:
         icons=['house', 'table', 'activity', 'envelope'], menu_icon="cast", default_index=0)
 
 @st.cache_data
-def get_img_as_base64(file):
-    with open(file, "rb") as f:
+def get_img_as_base64(file_path):
+    with open(file_path, "rb") as f:
         data = f.read()
     return base64.b64encode(data).decode()
 
-img = get_img_as_base64('imgs/pexels-dreamypixel-547115.jpg')
-img1 = get_img_as_base64('imgs/pexels-dreamypixel-547115.jpg')
-img3 = get_img_as_base64('imgs/Working2.jpg')
-img4 = get_img_as_base64('imgs/6592658.jpg')
-img5 = get_img_as_base64('imgs/keyfeature.jpg')
-img6 = get_img_as_base64('imgs/mindmap.jpg')
+img = get_img_as_base64('imgs/pexels-claudia-schmalz-3928374-20065048.jpg')
+img1 = get_img_as_base64('imgs/pexels-claudia-schmalz-3928374-20065048.jpg')
+
 page_bg_img = f"""
 <style>
     .main {{
         position: relative;
         z.index: 1;
-        background-color: #fed2ff;
+        background-color: white;
     }}
     .main::before {{
         content: "";
@@ -53,7 +58,7 @@ page_bg_img = f"""
         background-position: center; 
         background-repeat: no-repeat;
         background-attachment: fixed;
-        opacity: 0.5;
+        opacity: 0.65;
         position: absolute;
         top: 0;
         left: 0;
@@ -75,16 +80,14 @@ page_bg_img = f"""
         font-family: 'Nunito', sans-serif;
         font-size: 60px;
         font-weight: bold;
-        color: white;
+        color: #2F5C84;
         text-align: center;
-        padding: 0px 0px 0px 0px;
-        margin: 0px 0px 0px 0px;
     }}
     .subtitle {{
         font-family: 'Nunito', sans-serif;
         font-size: 30px;
         font-weight: bold;
-        color: white;
+        color: #2F5C84;
         text-align: center;
         padding: 0px 0px 0px 0px;
     }}
@@ -92,56 +95,47 @@ page_bg_img = f"""
         font-family: 'Nunito', sans-serif;
         font-size: 20px;
         font-weight: bold;
-        color: white;
+        color: #2F5C84;
         text-align: center;
         padding: 0px 0px 0px 0px;
     }}
     .line {{
-        font-family: 'Arial', sans-serif;
+        font-family: 'Times', sans-serif;
         font-size: 50px;
         font-weight: bold;
         color: white;
         text-align: center;
         padding: 0px 0px 0px 0px;
     }}
-    .new-page {{
-        margin-top: 55px; /* Adjust this value as needed for spacing */
-        margin-left: 50px;
-        margin-right: 50px;
-    }}
+
     .home-paragraph1 {{
         font-family: 'Montserrat Classic', sans-serif;
         font-size: 18px;
         color: black;
-        margin: 20px 0px;
         text-align: justify;
         text-indent: 50px;
-        padding: 10px 40px;
-        border-radius: 25px;
-        border : 2px solid #000000;
-        background-color: rgba(255, 255, 255, 0.8);
+        margin: 10px 40px;
+        padding: 30px 80px;
     }}
     .home-paragraph1 .home-paragraph-title {{
         font-family: 'Times', sans-serif;
-        font-size: 50px;
+        font-size: 30px;
         font-weight: bold;
         color: black;
         margin: 10px 0px;
-        text-align: center;
+        text-align: left;
+        justify-content: center;
+        align-items: center;
+        align-self: center;
     }}
-
     .home-paragraph2 {{
         font-family: 'Nunito', sans-serif;
         font-size: 18px;
         color: black;
-        text-align: justify;
+        text-align: left;
         text-indent: 50px;
-        border-radius: 25px;
-        border : 2px solid #000000;
-        background-color: rgba(255, 255, 255, 0.8);
-        padding: 10px 40px;
+        padding: 10px 80px;
     }}
-
     .home-paragraph2 .home-paragraph-title {{
         font-family: 'Times', sans-serif;
         font-size: 50px;
@@ -149,71 +143,265 @@ page_bg_img = f"""
         color: black;
         text-align: center;
     }}
-
     .home-image {{
         margin-top: 100px;
         margin-bottom: 100px;
     }}
+    [data-testid="stAppViewBlockContainer"] {{
+        padding: 0px 0px 0px 0px;
+    }}
+    .home-paragraph3 {{
+        font-family: 'Nunito', sans-serif;
+        font-size: 18px;
+        color: black;
+        text-align: left;
+        text-indent: 50px;
+        padding: 10px 80px;
+        margin-bottom: 100px;
+    }}
+    .home-paragraph3 .home-paragraph-title {{
+        font-family: 'Times', sans-serif;
+        font-size: 50px;
+        font-weight: bold;
+        color: black;
+        text-align: center;
+    }}
+
+    .element-container {{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }}
+
+        
+    [data-testid="element-container"] iframe {{
+        position: absolute;
+        top: 180px;
+        left: 0;
+        bottom: 0px;
+        right: 50px;
+        filter: brightness(1.2); 
+        
+    }}
+
 </style>
 """
 
 # Define the different pages
 def home():
+
     st.markdown(page_bg_img, unsafe_allow_html=True)
     st.markdown("<h1 class='home-text'>Sleep Health & Lifestyle<br>____________________________</h1><br><h2 class='subtitle'>Python project 2 - Group 4 - Afternoon class</h2><br><h3 class='lecturer'> Lecturer: Dr. Do Duc Tan</h3>", unsafe_allow_html=True)
 
-# Add paragraph 
-    st.markdown(f"""
-        <div class='new-page'>
+    # Create two columns
+    col1, col2 = st.columns([2, 1], gap = "small")
+
+    # Display text in the first column
+    with col1:
+        st.markdown(f"""
+            <div class='new-page'>
             <div class='home-paragraph1'>
                 <h2 class='home-paragraph-title'>Introduction</h2>
-                <div style="display: flex; flex-direction: row; align-items: flex-start;">
-                    <div style="flex: 1; padding-right: 25px;">
-                        <p>This document, produced by Group 4 under the supervision of Dr. Do Duc Tan, investigates the relationship between sleep health and lifestyle. Using the statistical software R, our group examined a detailed dataset (consisting of 13 columns and 375 rows) to reveal insights concerning sleep quality, stress levels, sleep duration, as well as their correlations with gender, age, and occupation.</p>
-                        <p>The report features visually appealing graphs created using R Studio, along with thorough explanations, offering a comprehensive interpretation of the data's significance for sleep health and lifestyle. Exercises from the book "R for Data Science" are included to strengthen understanding and provide practical examples.</p>
-                        <p>This report highlights the hard work and knowledge of Group 4 under Dr. Tan Duc Do's supervision, with the goal of deepening our comprehension of sleep health and lifestyle to promote well-being and sustain a healthy lifestyle. </p>
-                    </div>
-                    <div style="flex: 1; ">
-                        <img src="data:image/png;base64,{img3}" style="width: 90%; height: auto;"/>
-                    </div>
-                </div>
+                <p>This document, produced by Group 4 under the supervision of Dr. Do Duc Tan, investigates the relationship between sleep health and lifestyle. Using the statistical software R, our group examined a detailed dataset (consisting of 13 columns and 375 rows) to reveal insights concerning sleep quality, stress levels, sleep duration, as well as their correlations with gender, age, and occupation.</p>
+                <p>The report features visually appealing graphs created using R Studio, along with thorough explanations, offering a comprehensive interpretation of the data's significance for sleep health and lifestyle. Exercises from the book "R for Data Science" are included to strengthen understanding and provide practical examples.</p>
+                <p>This report highlights the hard work and knowledge of Group 4 under Dr. Tan Duc Do's supervision, with the goal of deepening our comprehension of sleep health and lifestyle to promote well-being and sustain a healthy lifestyle. </p>
             </div>
-            <div class='home-image'>
-                <img src="data:image/png;base64,{img6}" style="width: 100%; height: auto;"/>
-            </div>
+                    </div>
+        """, unsafe_allow_html=True)
+
+    # Display Lottie animation in the second column
+    with col2:
+        st_lottie(lottie_sleep, key="flex_lottie", width=300, height=400)
+
+  # Add paragraph 
+    st.markdown(f"""
+        <style>
+            .new-page {{ margin-bottom: 10px; margin-top: 50px;}}
+            .home-paragraph1, .home-paragraph2 {{ margin-bottom: 10px; }}
+            .home-paragraph-title {{ margin-bottom: 5px; }}
+            p {{ margin-bottom: 5px; }}
+            hr {{ border: 0.5px solid black; margin-top: 35px; margin-bottom: 5px; }}
+        </style>
+        <div class='new-page'>
+            <hr>
             <div class='home-paragraph2'>
                 <h3 class='home-paragraph-title'>What do we want to explore from it?</h3>
                 <div style="display: flex; flex-direction: row; align-items: flex-start;">
                     <div style="flex: 1; padding-right: 10px;">
-                        <p>- The Sleep Quality Sweet Spot: Does sleep duration impact quality? Is there an optimal number of hours for the best sleep? (Visualized with scatter plots)</p>
-                        <p>- Occupation and Sleep: Do different occupations affect sleep patterns? We'll compare average sleep duration and quality across various professions.</p>
-                        <p>- Physical Activity and Sleep Health: Is there a link between physical activity levels and sleep quality or duration? We'll use correlation analysis to quantify any associations.</p>
-                        <p>- Stress and Sleep: Does stress affect how long or how well we sleep? We'll use linear regression analysis to explore this relationship.</p>
-                        <p>- Body Mass Index and Sleep: Is there a connection between weight and sleep health? We'll analyze this visually and statistically using the BMI categories.</p>
-                        <p>- Physiology and Sleep: Do physiological parameters like blood pressure and heart rate reveal sleep disturbances? We'll use appropriate statistical tests to investigate this. </p>
-                        <p>- Sleep Disorders: How prevalent are sleep disorders within the dataset? Are there common characteristics among individuals with the same disorder?</p>
-                    </div>
-                    <div style="flex: 1;">
-                        <img src="data:image/png;base64,{img4}" style="width: 90%; height: auto;"/>
+                        <p>- Sleep Duration vs. Quality: Explore if there's an optimal sleep duration for the best quality. Visualize this relationship using scatter plots.</p>
+                        <p>- Occupation and Sleep: Analyze how different professions affect sleep patterns by comparing average sleep duration and quality.</p>
+                        <p>- Physical Activity and Sleep Health: Investigate the correlation between physical activity levels and sleep quality/duration.</p>
+                        <p>- Stress and Sleep: Examine how stress impacts sleep duration and quality using linear regression analysis.</p>
+                        <p>- Body Mass Index (BMI) and Sleep: Explore the connection between BMI categories and sleep health, both visually and statistically.</p>
+                        <p>- Physiology and Sleep: Analyze whether blood pressure and heart rate correlate with sleep disturbances using suitable statistical tests. </p>
+                        <p>- Sleep Disorders: Analyze sleep disorder prevalence and identify shared traits among those affected.</p>
                     </div>
                 </div>
             </div>
-            <div class='home-image'>
-                <img src="data:image/png;base64,{img5}" style="width: 100%; height: auto;"/>
+                <hr>
+                <div class='home-paragraph3'>
+                    <h4 class='home-paragraph-title'>Key Features of the Dataset</h4>
+                <div style="display: flex; flex-direction: row; align-items: flex-start;">
+                    <div style="flex: 1; padding-right: 10px;">
+                        <p>- Comprehensive Sleep Metrics: Explore sleep duration, quality, and factors influencing sleep patterns</p>
+                        <p>- Lifestyle Factors: Analyze physical activity levels, stress levels, and BMI categories</p>
+                        <p>- Cardiovascular Health: Examine blood pressure and heart rate measurements</p>
+                        <p>- Sleep Disorder Analysis: Identify the occurrence of sleep disorders such as Insomnia and Sleep Apnea</p>
+                </div>
             </div>
-        </div>
     """, unsafe_allow_html=True)
 
+
 def datasetPage():
-    st.title("Dataset")
-    st.write("The Health Dataset is a collection of data about people's health.")
-    # Read the CSV file into a DataFrame
-    try:
-        df = pd.read_csv('health.csv')
-        st.write('Here is the health data:')
-        st.dataframe(df)
-    except FileNotFoundError:
-        st.error("File 'health.csv' not found. Please upload the file to continue.")
+    img1 = get_img_as_base64('imgs/pexels-claudia-schmalz-3928374-20065048.jpg')
+    dataset_background = f"""
+    <style>
+        .dataset-page {{
+            background-image: url("data:image/png;base64,{img1}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.8;
+        }}
+        .main-content {{
+            position: relative;
+            z-index: 1;
+        }}
+        .sidebar .sidebar-content {{
+            background-color: rgba(255, 255, 255, 0.8);
+        }}
+    </style>
+    <div class="dataset-page"></div>
+    """
+
+    st.markdown(dataset_background, unsafe_allow_html=True)
+    st.title("Exploring our Dataset")
+    st.write("The Health Dataset is a collection of data about people's health which contains 13 columns and 375 rows.")
+    st.write("The columns are: Person ID, Gender, Age, Occupation, Sleep Duration, Quality of Sleep, Physical Activity Level, Stress Level, BMI Category, Blood Pressure, Heart Rate, Daily Steps, and Sleep Disorder.")
+    st.write("The dataset is available on Kaggle at the following link: [Sleep health & lifestyle | Kaggle](http://surl.li/sdwtj)")
+
+
+    # Define the different pages
+    with st.container():
+        # Section 1: 
+        st.markdown("<hr style='border:0.5px solid black'>", unsafe_allow_html=True)
+        col1, col2 = st.columns([2, 1])
+        with col1:
+            st.markdown(
+                """
+                <div class='datasetPage-paragraph1'>
+                    <h4 class='datasetPage home-paragraph-title'>Let's get to know about our dataset</h4></div>
+                    <p>The "Sleep health and lifestyle dataset" appears to capture information about individuals' sleep patterns, health indicators, and other relevant attributes. This file provides information on 205 individuals which has 13 variables</p>
+                        <div style="display: flex; flex-direction: row; align-items: flex-start;">
+                            <div style="flex: 1; padding-right: 10px;">
+                    <p style='text-align: left;'>The dataset contains the following columns:</p>
+                        <p> - Person ID: Unique identifier for each individual</p>
+                        <p>- Gender: Gender of the individual</p>
+                        <p>- Age: Age of the individual</p>
+                        <p>- Occupation: Occupation of the individual</p>
+                        <p>- Sleep Duration: Number of hours slept per night</p>
+                        <p>- Quality of Sleep: Rated from 4-9, with 9 being best quality</p>
+                        <p>- Physical Activity Level: Rated from 30-90 based on activity minutes</p>
+                        <p>- Stress Level: Rated from 3-8, with 8 being highest stress</p>
+                        <p>- BMI Category: Body mass index category of individual</p>
+                        <p>- Blood Pressure: Systolic and diastolic blood pressure readings</p>
+                        <p>- Heart Rate: Heart rate in beats per minute</p>
+                        <p>- Daily Steps: Average daily steps of individual</p>
+                        <p>- Sleep Disorder: If individual has a sleep disorder like insomnia or sleep apnea</p>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+        with col2:
+            pass
+        st.markdown("<div class='divider'></div>", unsafe_allow_html=True)  
+
+        # Section 2: Why did we choose this data set? 
+        st.markdown("<hr style='border:0.5px solid black'>", unsafe_allow_html=True)
+        st.markdown("<div class='datasetPage home-paragraph-title'><h3>Why did we choose this data set?</h3></div>", unsafe_allow_html=True)
+        
+        col1, col2 = st.columns(2) 
+        with col1:
+            st.markdown(
+                """
+                <div class='datasetPage home-paragraph'>
+                        <p>- Focus on Sleep Health: The dataset directly addresses a crucial aspect of well-being, making it inherently interesting.</p>
+                        <p>- Organized Structure: The clear layout with distinct variables (13 in total) facilitates easy analysis and exploration.</p>
+                        <p>- Holistic Viewpoint: It captures factors like sleep duration, quality, physical activity, stress, and even body mass index, providing a comprehensive picture of each participant's lifestyle.</p>
+                        <p>- Potential for Discovery: By analyzing these variables, we can potentially uncover significant relationships between sleep health and factors like sleep disorders or overall health.</p>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+        with col2:
+            pass
+
+        st.markdown("<div class='divider'></div>", unsafe_allow_html=True)  
+
+        # Section 3: What do we want to explore from it?
+        st.markdown("<hr style='border:0.5px solid black'>", unsafe_allow_html=True)
+        st.markdown("<div class='datasetPage home-paragraph-title'><h3>What do we want to explore from it?</h3></div>", unsafe_allow_html=True)
+        col1, col2 = st.columns([2, 1])
+        with col1:
+            st.markdown(
+                """
+                <div class='datasetPage .home-paragraph'>
+
+                This dataset goes beyond just monitoring sleep. What we hope to learn:
+
+                - The Sleep Quality Sweet Spot: Does sleep duration impact quality? Is there an optimal number of hours for the best sleep? (Visualized with scatter plots)
+                - Occupation and Sleep: Do different occupations affect sleep patterns? We'll compare average sleep duration and quality across various professions.
+                - Physical Activity and Sleep Health: Is there a link between physical activity levels and sleep quality or duration? We'll use correlation analysis to quantify any associations.
+                - Stress and Sleep: Does stress affect how long or how well we sleep? We'll use linear regression analysis to explore this relationship.
+                - Body Mass Index and Sleep: Is there a connection between weight and sleep health? We'll analyze this visually and statistically using the BMI categories.
+                - Physiology and Sleep: Do physiological parameters like blood pressure and heart rate reveal sleep disturbances? We'll use appropriate statistical tests to investigate this.
+                - Sleep Disorders: How prevalent are sleep disorders within the dataset? Are there common characteristics among individuals with the same disorder?
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+        with col2:
+            pass
+
+        st.markdown("<div class='divider'></div>", unsafe_allow_html=True)  
+
+        # Section 4: Dataset 
+        st.markdown("<hr style='border:0.5px solid black'>", unsafe_allow_html=True)
+        st.markdown("<div class='datasetPage home-paragraph-title'><h3>Dataset</h3></div>", unsafe_allow_html=True)
+        try:
+            # Filters
+            with st.sidebar:
+                st.header("Filter the dataset")
+                                # Gender filter with select all
+                gender_unique = df['Gender'].unique()
+                select_all_genders = st.checkbox("Select All Genders", value=True)
+                if select_all_genders:
+                    gender_filter = st.multiselect("Gender", options=gender_unique, default=gender_unique)
+                else:
+                    gender_filter = st.multiselect("Gender", options=gender_unique)
+                age_filter = st.slider("Age", int(df['Age'].min()), int(df['Age'].max()), (int(df['Age'].min()), int(df['Age'].max())))
+                occupation_unique = df['Occupation'].unique()
+                select_all_occupations = st.checkbox("Select All Occupations", value=True)
+                if select_all_occupations:
+                    occupation_filter = st.multiselect("Occupation", options=occupation_unique, default=occupation_unique)
+                else:
+                    occupation_filter = st.multiselect("Occupation", options=occupation_unique)
+            df_filtered = df[
+                (df['Gender'].isin(gender_filter)) &
+                (df['Age'] >= age_filter[0]) & (df['Age'] <= age_filter[1]) &
+                (df['Occupation'].isin(occupation_filter))
+            ]
+            # Display filtered dataset
+            st.dataframe(df_filtered, use_container_width=True)  
+        except FileNotFoundError:
+            st.error("File 'health.csv' not found.")
 
 def graph():
     st.title("Graph")
