@@ -36,7 +36,7 @@ with st.sidebar:
         "Navigation", ["Home", "Dataset", "Graph", "Contact"],
         icons=['house', 'table', 'activity', 'envelope'], menu_icon="cast", default_index=0)
 
-@st.cache_data
+@st.cache
 def get_img_as_base64(file_path):
     with open(file_path, "rb") as f:
         data = f.read()
@@ -44,6 +44,15 @@ def get_img_as_base64(file_path):
 
 img = get_img_as_base64('imgs/pexels-claudia-schmalz-3928374-20065048.jpg')
 img1 = get_img_as_base64('imgs/pexels-claudia-schmalz-3928374-20065048.jpg')
+mem1 = get_img_as_base64('imgs/member1.jpg')
+mem2 = get_img_as_base64('imgs/member2.jpg')
+mem3 = get_img_as_base64('imgs/member3.jpg')
+mem4 = get_img_as_base64('imgs/member4.jpg')
+mem5 = get_img_as_base64('imgs/member5.jpg')
+mem6 = get_img_as_base64('imgs/member6.jpg')
+mem7 = get_img_as_base64('imgs/member7.jpg')
+theme = get_img_as_base64('imgs/themaboutus.jpg')
+
 
 page_bg_img = f"""
 <style>
@@ -188,6 +197,31 @@ page_bg_img = f"""
 
     hr {{ border: 0.5px solid #06B2B8; margin-top: 15px; margin-bottom: 5px; }}
 
+</style>
+"""
+
+page_bg_img2 = f"""
+<style>
+    .main {{
+        position: relative;
+        z.index: 1;
+        background-color: #eee4da;
+    }}
+    .main::before {{
+        content: "";
+        background-image: url("data:image/png;base64,{theme}");
+        background-size: cover;
+        background-position: center; 
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        opacity: 0.5;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 0;
+    }}
 </style>
 """
 
@@ -586,8 +620,100 @@ def graph():
         st.code(open("app13.py").read(), language='python')
 
 def contact():
-    st.title("Contact")
-    st.write("This is the contact page.")
+    #add title our team members
+    st.markdown(page_bg_img2, unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center; margin-bottom: 70px; color: white;'>Our Team Members</h1>", unsafe_allow_html=True)
+    # Create three containers in the same line
+    container1, container2, container3, container4 = st.columns(4)
+    st.markdown("""
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    """, unsafe_allow_html=True)
+
+    # Container 1
+    with container1:
+        st.markdown(f"""
+            <div class='member-info' style='background-color:#9bbcc5; height: 450px; text-align: center; margin-bottom: 50px; border: 2px solid white;'>
+            <img src="data:image/png;base64,{mem1}" alt='Member 1' style='width: 150px; height: 150px; border-radius: 50%; margin-top: 20px;'>
+            <h2 class='member-name' style='color: white; margin-bottom: 10px;'><i class='fas fa-user'></i> Trần Thị Ngọc Ngân</h2>
+            <h3 class='member-id' style='color: white;'><i class='fas fa-id-card'></i> ID: 10623066</h3>
+            <h4 class='member-email' style='color: white;'><i class='fas fa-envelope'></i> Email: 10623066@student.vgu.edu.vn</h4>
+            </div>
+        """, unsafe_allow_html=True)
+
+    # Container 2
+    # Container 2
+    with container2:
+        st.markdown(f"""
+            <div class='member-info' style='background-color: #9bbcc5; height: 450px; text-align: center; margin-bottom: 50px; border: 2px solid white;'>
+            <img src="data:image/png;base64,{mem2}" alt='Member 2' style='width: 150px; height: 150px; border-radius: 50%; margin-top: 20px;'>
+            <h2 class='member-name' style='color: white; margin-bottom: 10px;'><i class='fas fa-user'></i> Phan Vũ Minh Phương</h2>
+            <h3 class='member-id' style='color: white;'><i class='fas fa-id-card'></i> ID: 10323067</h3>
+            <h4 class='member-email' style='color: white;'><i class='fas fa-envelope'></i> Email: 10323067@student.vgu.edu.vn</h4>
+            </div>
+        """, unsafe_allow_html=True)
+    
+    # Container 3
+    with container3:
+        st.markdown(f"""
+            <div class='member-info' style='background-color: #9bbcc5; height: 450px; text-align: center; margin-bottom: 50px; border: 2px solid white;'>
+            <img src="data:image/png;base64,{mem3}" alt='Member 3' style='width: 150px; height: 150px; border-radius: 50%; margin-top: 20px;'>
+            <h2 class='member-name' style='color: white; margin-bottom: 10px;'><i class='fas fa-user'></i> Trương Ngọc Trúc Diệp</h2>
+            <h3 class='member-id' style='color: white;'><i class='fas fa-id-card'></i> ID: 10623007</h3>
+            <h4 class='member-email' style='color: white;'><i class='fas fa-envelope'></i> Email: 10623007@student.vgu.edu.vn</h4>
+            </div>
+        """, unsafe_allow_html=True)
+    
+    # Container 4
+    with container4:
+        st.markdown(f"""
+            <div class='member-info' style='background-color: #9bbcc5; height: 450px; text-align: center; margin-bottom: 50px; border: 2px solid white;'>
+            <img src="data:image/png;base64,{mem4}" alt='Member 4' style='width: 150px; height: 150px; border-radius: 50%; margin-top: 20px;'>
+            <h2 class='member-name' style='color: white; margin-bottom: 10px;'><i class='fas fa-user'></i> Nguyễn Khánh Linh</h2>
+            <h3 class='member-id' style='color: white;'><i class='fas fa-id-card'></i> ID: 10623026</h3>
+            <h4 class='member-email' style='color: white;'><i class='fas fa-envelope'></i> Email: 10623026@student.vgu.edu.vn</h4>
+            </div>
+        """, unsafe_allow_html=True)
+    container5, container6, container7 = st.columns(3)
+    
+    #Container5
+    #Container5
+    with container5:
+        st.markdown(f"""
+            <div class='member-info' style='background-color: #9bbcc5; height: 450px; text-align: center; margin-bottom: 50px; border: 2px solid white;'>
+            <img src="data:image/png;base64,{mem5}" alt='Member 5' style='width: 150px; height: 150px; border-radius: 50%; margin-top: 20px;'>
+            <h2 class='member-name' style='color: white; margin-bottom: 10px;'><i class='fas fa-user'></i> Phạm Đăng Khoa</h2>
+            <h3 class='member-id' style='color: white;'><i class='fas fa-id-card'></i> ID: 10623057</h3>
+            <h4 class='member-email' style='color: white;'><i class='fas fa-envelope'></i> Email: 10623057@student.vgu.edu.vn</h4>
+            </div>
+        """, unsafe_allow_html=True)
+        
+    #Container6
+    with container6:
+        st.markdown(f"""
+            <div class='member-info' style='background-color: #9bbcc5; height: 450px; text-align: center; margin-bottom: 50px; border: 2px solid white;'>
+            <img src="data:image/png;base64,{mem6}" alt='Member 6' style='width: 150px; height: 150px; border-radius: 50%; margin-top: 20px;'>
+            <h2 class='member-name' style='color: white; margin-bottom: 10px;'><i class='fas fa-user'></i> Đỗ Thành Long</h2>
+            <h3 class='member-id' style='color: white;'><i class='fas fa-id-card'></i> ID: 10421090</h3>
+            <h4 class='member-email' style='color: white;'><i class='fas fa-envelope'></i> Email: 10421090@student.vgu.edu.vn</h4>
+            </div>
+        """, unsafe_allow_html=True)
+        
+    #Container7
+    with container7:
+        st.markdown(f"""
+            <div class='member-info' style='background-color: #9bbcc5; height: 450px; text-align: center; margin-bottom: 50px; border: 2px solid white;'>
+            <img src="data:image/png;base64,{mem7}" alt='Member 7' style='width: 150px; height: 150px; border-radius: 50%; margin-top: 20px;'>
+            <h2 class='member-name' style='color: white; margin-bottom: 10px;'><i class='fas fa-user'></i> Trần Diễm Quỳnh</h2>
+            <h3 class='member-id' style='color: white;'><i class='fas fa-id-card'></i> ID: 10623070</h3>
+            <h4 class='member-email' style='color: white;'><i class='fas fa-envelope'></i> Email: 10623070@student.vgu.edu.vn</h4>
+            </div>
+        """, unsafe_allow_html=True)
+    
+    
+    # Final container for the text
+    with st.container():
+        st.markdown("<h1 style='margin-top: 40px; color:#333333;'>Thank you for contacting us. If you have any further questions or need assistance, please don't hesitate to reach out. Our team is here to help. Have a great day!</h1>", unsafe_allow_html=True)
+        st.markdown("<h2 style='color: #333333; margin-left: 1000px; margin-top: 40px;'><i class='fas fa-map-marker-alt'></i> Address: Ring road 4, Quarter 4, Thoi Hoa Ward, Ben Cat Town, Binh Duong Province</h2>", unsafe_allow_html=True)
 
 # Display the selected page
 if selected == "Home":
