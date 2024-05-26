@@ -124,9 +124,6 @@ page_bg_img = f"""
         color: black;
         margin: 10px 0px;
         text-align: left;
-        justify-content: center;
-        align-items: center;
-        align-self: center;
     }}
     .home-paragraph2 {{
         font-family: 'Nunito', sans-serif;
@@ -138,10 +135,10 @@ page_bg_img = f"""
     }}
     .home-paragraph2 .home-paragraph-title {{
         font-family: 'Times', sans-serif;
-        font-size: 50px;
+        font-size: 30px;
         font-weight: bold;
         color: black;
-        text-align: center;
+        text-align: left;
     }}
     .home-image {{
         margin-top: 100px;
@@ -161,10 +158,10 @@ page_bg_img = f"""
     }}
     .home-paragraph3 .home-paragraph-title {{
         font-family: 'Times', sans-serif;
-        font-size: 50px;
+        font-size: 30px;
         font-weight: bold;
         color: black;
-        text-align: center;
+        text-align: left;
     }}
 
     .element-container {{
