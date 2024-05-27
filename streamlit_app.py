@@ -36,7 +36,7 @@ with st.sidebar:
         "Navigation", ["Home", "Dataset", "Graph", "Contact"],
         icons=['house', 'table', 'activity', 'envelope'], menu_icon="cast", default_index=0)
 
-@st.cache
+@st.cache_data
 def get_img_as_base64(file_path):
     with open(file_path, "rb") as f:
         data = f.read()
@@ -44,14 +44,7 @@ def get_img_as_base64(file_path):
 
 img = get_img_as_base64('imgs/pexels-claudia-schmalz-3928374-20065048.jpg')
 img1 = get_img_as_base64('imgs/pexels-claudia-schmalz-3928374-20065048.jpg')
-mem1 = get_img_as_base64('imgs/member1.jpg')
-mem2 = get_img_as_base64('imgs/member2.jpg')
-mem3 = get_img_as_base64('imgs/member3.jpg')
-mem4 = get_img_as_base64('imgs/member4.jpg')
-mem5 = get_img_as_base64('imgs/member5.jpg')
-mem6 = get_img_as_base64('imgs/member6.jpg')
-mem7 = get_img_as_base64('imgs/member7.jpg')
-theme = get_img_as_base64('imgs/themaboutus.jpg')
+img2 = get_img_as_base64('imgs/13.png')
 
 
 page_bg_img = f"""
@@ -163,8 +156,7 @@ page_bg_img = f"""
         color: black;
         text-align: left;
         text-indent: 50px;
-        padding: 30px 40px;
-        margin-bottom: 100px;
+        padding: 10px 40px;
     }}
     .home-paragraph3 .home-paragraph-title {{
         font-family: 'Times', sans-serif;
@@ -172,14 +164,6 @@ page_bg_img = f"""
         font-weight: bold;
         color: black;
         text-align: left;
-    }}
-    .home-paragraph4 {{
-         font-family: 'Nunito', sans-serif;
-        font-size: 18px;
-        color: black;
-        text-align: left;
-        text-indent: 50px;
-        padding: 5px 35px;
     }}
     .element-container {{
         display: flex;
@@ -197,31 +181,6 @@ page_bg_img = f"""
 
     hr {{ border: 0.5px solid #06B2B8; margin-top: 15px; margin-bottom: 5px; }}
 
-</style>
-"""
-
-page_bg_img2 = f"""
-<style>
-    .main {{
-        position: relative;
-        z.index: 1;
-        background-color: #eee4da;
-    }}
-    .main::before {{
-        content: "";
-        background-image: url("data:image/png;base64,{theme}");
-        background-size: cover;
-        background-position: center; 
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        opacity: 0.5;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 0;
-    }}
 </style>
 """
 
@@ -300,108 +259,41 @@ def home():
             </div>
         """, unsafe_allow_html=True)
     st.markdown(f"""
-                <style>
-                    .title3 {{
-                        margin-left: 50px;
-                        margin-right: 50px;
-                    }}
-                
-                </style>
+                <img src="data:image/png;base64,{img2}" alt='Sleep Health & Lifestyle' style='width: 90%; height: 100%; margin-left: 60px; margin-right: 30px; margin-bottom: 50px; margin-top: 30px;'>
     """, unsafe_allow_html=True)
-    st.markdown("<div class='title3'><h4 class='home-paragraph-title'>Graphical Analysis: We've crafted 13 graphs, covering 10 different categories:</h4><hr></div>", unsafe_allow_html=True)
-    col1, col2 = st.columns([3, 1], gap = "small")
-    with col1:
-        st.markdown(f"""
-            <div class='new-page'>
-                <div class='home-paragraph4'>
-                    <div style="display: flex; flex-direction: row; align-items: flex-start;">
-                    <div style="flex: 1; padding-right: 10px;">
-                <dl>
-                    <dt>Box plot:</dt> 
-                    <dd>BMI Categories and Their Impact on Heart Rate</dd>
-                    <dt>Bar chart:</dt>
-                    <dd>Relationship between Physical Activity Level, Heart Rate and Gender</dd>
-                    <dd>Distribution of BMI Categories by Gender</dd> 
-                    <dt>line chart:</dt>
-                    <dd>Gender-Based Trends in Daily Step Counts Across Age Groups</dd>
-                    <dt>Pie chart:</dt>
-                    <dd>Relationship Between Sleep Quality and Heart Rate Among Surveyed Individuals</dd>
-                    <dt>Density plot:</dt>
-                    <dd> Relationship between Gender, Occupation, and Sleep Duration</dd>
-                    <dd> Density of Sleep Duration by Gender and Stress Level</dd>
-                    <dt>Ridgeline density plot:</dt>
-                    <dd>Gender-Specific Stress Level Trends Across Age Categories</dd>
-                    <dt>heatmap</dt>
-                    <dd>Heatmap of Stress Level vs Sleep Disorder</dd>
-                    <dd>Comparative Analysis of Body Mass Index Categories Across Professional Sectors</dd>
-                    <dt>Violin plot:</dt>
-                    <dd>Daily Steps Distribution by Gender: A Look at the Violin Plot</dd>
-                    <dt>Bubble chart:</dt>
-                    <dd>Analysis of Stress Levels Across Different Occupations and Age Groups</dd>
-                    <dt>Grouped bar plot with facets:</dt>
-                    <dd>Trends of Quality of Sleep by Gender</dd>
-                </dl>
-                    </div>
-                    </div>
-                </div>
-            </div>
-        """, unsafe_allow_html=True)
-    with col2:
-        st_lottie(lottie_chart, key="flex_lottie_chart", width=300, height=300)
-        
-  # Add paragraph 
-    st.markdown(f"""
-        <style>
-            .new-page {{ margin-bottom: 10px; margin-top: 50px;}}
-            .home-paragraph1, .home-paragraph2 {{ margin-bottom: 10px; }}
-            .home-paragraph-title {{ margin-bottom: 5px; }}
-            p {{ margin-bottom: 5px; }}
-            
-        </style>
-        <div class='new-page'>
-                <div class='home-paragraph3'>
-                    <h4 class='home-paragraph-title'>Key Features of the Dataset</h4>
-                <div style="display: flex; flex-direction: row; align-items: flex-start;">
-                    <div style="flex: 1; padding-right: 10px;">
-                        <p>- Comprehensive Sleep Metrics: Explore sleep duration, quality, and factors influencing sleep patterns</p>
-                        <p>- Lifestyle Factors: Analyze physical activity levels, stress levels, and BMI categories</p>
-                        <p>- Cardiovascular Health: Examine blood pressure and heart rate measurements</p>
-                        <p>- Sleep Disorder Analysis: Identify the occurrence of sleep disorders such as Insomnia and Sleep Apnea</p>
-                </div>
-            </div>
-    """, unsafe_allow_html=True)
-
 
 def datasetPage():
-    img1 = get_img_as_base64('imgs/pexels-claudia-schmalz-3928374-20065048.jpg')
-    dataset_background = f"""
+    theme = get_img_as_base64('imgs/themaboutus.jpg')
+
+    page_bg_img1 = f"""
     <style>
-        .dataset-page {{
-            background-image: url("data:image/png;base64,{img1}");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.8;
-        }}
-        .main-content {{
-            position: relative;
-            z-index: 1;
-        }}
-        .sidebar .sidebar-content {{
-            background-color: rgba(255, 255, 255, 0.8);
+        .main {{
+        position: relative;
+        z.index: 1;
+        background-color: white;
+    }}
+    .main::before {{
+        content: "";
+        background-image: url("data:image/png;base64,{img1}");
+        background-size: cover;
+        background-position: center; 
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        opacity: 0.65;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 0;
+    }}
+        [data-testid="stSidebarContent"] {{
+        background-image: url("data:image/png;base64,{img}");
+        background-size: cover;
         }}
     </style>
-    <div class="dataset-page"></div>
     """
-
-    st.markdown(dataset_background, unsafe_allow_html=True)
+    st.markdown(page_bg_img1, unsafe_allow_html=True)
     st.title("Exploring our Dataset")
     st.write("The Health Dataset is a collection of data about people's health which contains 13 columns and 375 rows.")
     st.write("The columns are: Person ID, Gender, Age, Occupation, Sleep Duration, Quality of Sleep, Physical Activity Level, Stress Level, BMI Category, Blood Pressure, Heart Rate, Daily Steps, and Sleep Disorder.")
@@ -620,9 +512,52 @@ def graph():
         st.code(open("app13.py").read(), language='python')
 
 def contact():
+    mem1 = get_img_as_base64('imgs/member1.jpg')
+    mem2 = get_img_as_base64('imgs/member2.jpg')
+    mem3 = get_img_as_base64('imgs/member3.jpg')
+    mem4 = get_img_as_base64('imgs/member4.jpg')
+    mem5 = get_img_as_base64('imgs/member5.jpg')
+    mem6 = get_img_as_base64('imgs/member6.jpg')
+    mem7 = get_img_as_base64('imgs/member7.jpg')
+    theme = get_img_as_base64('imgs/themaboutus.jpg')
+
+    page_bg_img2 = f"""
+    <style>
+        .main {{
+            position: relative;
+            z.index: 1;
+            background-color: #eee4da;
+        }}
+        .main::before {{
+            content: "";
+            background-image: url("data:image/png;base64,{theme}");
+            background-size: cover;
+            background-position: center; 
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            opacity: 0.65;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 0;
+        }}
+        .member-info {{
+            border-radius: 10px;
+        }}
+        [data-testid="stSidebarContent"] {{
+        background-image: url("data:image/png;base64,{img}");
+        background-size: cover;
+    }}
+    </style>
+    """
+
+
+
     #add title our team members
     st.markdown(page_bg_img2, unsafe_allow_html=True)
-    st.markdown("<h1 style='text-align: center; margin-bottom: 70px; color: white;'>Our Team Members</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center; margin-bottom: 50px; color: #2F5C84;'>OUR TEAM MEMBERS</h1>", unsafe_allow_html=True)
     # Create three containers in the same line
     container1, container2, container3, container4 = st.columns(4)
     st.markdown("""
@@ -632,11 +567,10 @@ def contact():
     # Container 1
     with container1:
         st.markdown(f"""
-            <div class='member-info' style='background-color:#9bbcc5; height: 450px; text-align: center; margin-bottom: 50px; border: 2px solid white;'>
-            <img src="data:image/png;base64,{mem1}" alt='Member 1' style='width: 150px; height: 150px; border-radius: 50%; margin-top: 20px;'>
-            <h2 class='member-name' style='color: white; margin-bottom: 10px;'><i class='fas fa-user'></i> Trần Thị Ngọc Ngân</h2>
-            <h3 class='member-id' style='color: white;'><i class='fas fa-id-card'></i> ID: 10623066</h3>
-            <h4 class='member-email' style='color: white;'><i class='fas fa-envelope'></i> Email: 10623066@student.vgu.edu.vn</h4>
+            <div class='member-info' style='background-color:#9bbcc5; height: 330px; text-align: center; margin-bottom: 50px; border: 2px solid white;'>
+            <img src="data:image/png;base64,{mem5}" alt='Member 1' style='width: 115px; height: 115px; border-radius: 50%; margin-top: 20px;'>
+            <h2 class='member-name' style='color: white; margin-bottom: 10px; font-size: 30px; font-family: 'Nunito', sans-serif;'><i class='fas fa-user'></i> Phạm Đăng Khoa</h2>
+            <h3 class='member-id' style='color: white;font-size: 20px;'><i class='fas fa-id-card'></i> ID: 10623057</h3>
             </div>
         """, unsafe_allow_html=True)
 
@@ -644,33 +578,30 @@ def contact():
     # Container 2
     with container2:
         st.markdown(f"""
-            <div class='member-info' style='background-color: #9bbcc5; height: 450px; text-align: center; margin-bottom: 50px; border: 2px solid white;'>
-            <img src="data:image/png;base64,{mem2}" alt='Member 2' style='width: 150px; height: 150px; border-radius: 50%; margin-top: 20px;'>
-            <h2 class='member-name' style='color: white; margin-bottom: 10px;'><i class='fas fa-user'></i> Phan Vũ Minh Phương</h2>
-            <h3 class='member-id' style='color: white;'><i class='fas fa-id-card'></i> ID: 10323067</h3>
-            <h4 class='member-email' style='color: white;'><i class='fas fa-envelope'></i> Email: 10323067@student.vgu.edu.vn</h4>
+            <div class='member-info' style='background-color: #9bbcc5; height: 330px; text-align: center; margin-bottom: 50px; border: 2px solid white;'>
+            <img src="data:image/png;base64,{mem6}" alt='Member 2' style='width: 115px; height: 115px; border-radius: 50%; margin-top: 20px;'>
+            <h2 class='member-name' style='color: white; margin-bottom: 10px;font-size: 30px;font-family: 'Nunito', sans-serif;'><i class='fas fa-user'></i> Đỗ Thành Long</h2>
+            <h3 class='member-id' style='color: white;font-size: 20px;margin-top:45px;'><i class='fas fa-id-card'></i> ID: 10421090</h3>
             </div>
         """, unsafe_allow_html=True)
     
     # Container 3
     with container3:
         st.markdown(f"""
-            <div class='member-info' style='background-color: #9bbcc5; height: 450px; text-align: center; margin-bottom: 50px; border: 2px solid white;'>
-            <img src="data:image/png;base64,{mem3}" alt='Member 3' style='width: 150px; height: 150px; border-radius: 50%; margin-top: 20px;'>
-            <h2 class='member-name' style='color: white; margin-bottom: 10px;'><i class='fas fa-user'></i> Trương Ngọc Trúc Diệp</h2>
-            <h3 class='member-id' style='color: white;'><i class='fas fa-id-card'></i> ID: 10623007</h3>
-            <h4 class='member-email' style='color: white;'><i class='fas fa-envelope'></i> Email: 10623007@student.vgu.edu.vn</h4>
+            <div class='member-info' style='background-color: #9bbcc5; height: 330px; text-align: center; margin-bottom: 50px; border: 2px solid white;'>
+            <img src="data:image/png;base64,{mem7}" alt='Member 3' style='width: 115px; height: 115px; border-radius: 50%; margin-top: 20px;'>
+            <h2 class='member-name' style='color: white; margin-bottom: 10px;font-size: 30px;font-family: 'Nunito', sans-serif;'><i class='fas fa-user'></i> Trần Diễm Quỳnh</h2>
+            <h3 class='member-id' style='color: white;font-size: 20px;'><i class='fas fa-id-card'></i> ID: 10623070</h3>
             </div>
         """, unsafe_allow_html=True)
     
     # Container 4
     with container4:
         st.markdown(f"""
-            <div class='member-info' style='background-color: #9bbcc5; height: 450px; text-align: center; margin-bottom: 50px; border: 2px solid white;'>
-            <img src="data:image/png;base64,{mem4}" alt='Member 4' style='width: 150px; height: 150px; border-radius: 50%; margin-top: 20px;'>
-            <h2 class='member-name' style='color: white; margin-bottom: 10px;'><i class='fas fa-user'></i> Nguyễn Khánh Linh</h2>
-            <h3 class='member-id' style='color: white;'><i class='fas fa-id-card'></i> ID: 10623026</h3>
-            <h4 class='member-email' style='color: white;'><i class='fas fa-envelope'></i> Email: 10623026@student.vgu.edu.vn</h4>
+            <div class='member-info' style='background-color: #9bbcc5; height: 330px; text-align: center; margin-bottom: 50px; border: 2px solid white;'>
+            <img src="data:image/png;base64,{mem4}" alt='Member 4' style='width: 115px; height: 115px; border-radius: 50%; margin-top: 20px;'>
+            <h2 class='member-name' style='color: white; margin-bottom: 10px;font-size: 30px;font-family: 'Nunito', sans-serif;'><i class='fas fa-user'></i> Nguyễn Khánh Linh</h2>
+            <h3 class='member-id' style='color: white;font-size: 20px;'><i class='fas fa-id-card'></i> ID: 10623026</h3>
             </div>
         """, unsafe_allow_html=True)
     container5, container6, container7 = st.columns(3)
@@ -679,41 +610,37 @@ def contact():
     #Container5
     with container5:
         st.markdown(f"""
-            <div class='member-info' style='background-color: #9bbcc5; height: 450px; text-align: center; margin-bottom: 50px; border: 2px solid white;'>
-            <img src="data:image/png;base64,{mem5}" alt='Member 5' style='width: 150px; height: 150px; border-radius: 50%; margin-top: 20px;'>
-            <h2 class='member-name' style='color: white; margin-bottom: 10px;'><i class='fas fa-user'></i> Phạm Đăng Khoa</h2>
-            <h3 class='member-id' style='color: white;'><i class='fas fa-id-card'></i> ID: 10623057</h3>
-            <h4 class='member-email' style='color: white;'><i class='fas fa-envelope'></i> Email: 10623057@student.vgu.edu.vn</h4>
+            <div class='member-info' style='background-color: #9bbcc5; height: 330px; text-align: center; margin-bottom: 50px; border: 2px solid white;'>
+            <img src="data:image/png;base64,{mem2}" alt='Member 5' style='width: 115px; height: 115px; border-radius: 50%; margin-top: 20px;'>
+            <h2 class='member-name' style='color: white; margin-bottom: 10px;font-size: 30px;font-family: 'Nunito', sans-serif;'><i class='fas fa-user'></i> Phan Vũ Minh Phương</h2>
+            <h3 class='member-id' style='color: white;font-size: 20px;'><i class='fas fa-id-card'></i> ID: 10323067</h3>
             </div>
         """, unsafe_allow_html=True)
         
     #Container6
     with container6:
         st.markdown(f"""
-            <div class='member-info' style='background-color: #9bbcc5; height: 450px; text-align: center; margin-bottom: 50px; border: 2px solid white;'>
-            <img src="data:image/png;base64,{mem6}" alt='Member 6' style='width: 150px; height: 150px; border-radius: 50%; margin-top: 20px;'>
-            <h2 class='member-name' style='color: white; margin-bottom: 10px;'><i class='fas fa-user'></i> Đỗ Thành Long</h2>
-            <h3 class='member-id' style='color: white;'><i class='fas fa-id-card'></i> ID: 10421090</h3>
-            <h4 class='member-email' style='color: white;'><i class='fas fa-envelope'></i> Email: 10421090@student.vgu.edu.vn</h4>
-            </div>
+            <div class='member-info' style='background-color: #9bbcc5; height: 330px; text-align: center; margin-bottom: 50px; border: 2px solid white;'>
+            <img src="data:image/png;base64,{mem1}" alt='Member 6' style='width: 115px; height: 115px; border-radius: 50%; margin-top: 20px;'>
+            <h2 class='member-name' style='color: white; margin-bottom: 10px;font-size: 30px;font-family: 'Nunito', sans-serif;'><i class='fas fa-user'></i> Trần Thị Ngọc Ngân</h2>
+            <h3 class='member-id' style='color: white;font-size: 20px;'><i class='fas fa-id-card'></i> ID: 10623066</h3>
         """, unsafe_allow_html=True)
         
     #Container7
     with container7:
         st.markdown(f"""
-            <div class='member-info' style='background-color: #9bbcc5; height: 450px; text-align: center; margin-bottom: 50px; border: 2px solid white;'>
-            <img src="data:image/png;base64,{mem7}" alt='Member 7' style='width: 150px; height: 150px; border-radius: 50%; margin-top: 20px;'>
-            <h2 class='member-name' style='color: white; margin-bottom: 10px;'><i class='fas fa-user'></i> Trần Diễm Quỳnh</h2>
-            <h3 class='member-id' style='color: white;'><i class='fas fa-id-card'></i> ID: 10623070</h3>
-            <h4 class='member-email' style='color: white;'><i class='fas fa-envelope'></i> Email: 10623070@student.vgu.edu.vn</h4>
+            <div class='member-info' style='background-color: #9bbcc5; height: 330px; text-align: center; margin-bottom: 50px; border: 2px solid white;'>
+            <img src="data:image/png;base64,{mem3}" alt='Member 7' style='width: 115px; height: 115px; border-radius: 50%; margin-top: 20px;'>
+            <h2 class='member-name' style='color: white; margin-bottom: 10px;font-size: 30px;font-family: 'Nunito', sans-serif;'><i class='fas fa-user'></i> Trương Ngọc Trúc Diệp</h2>
+            <h3 class='member-id' style='color: white;font-size: 20px;'><i class='fas fa-id-card'></i> ID: 10623007</h3>
             </div>
         """, unsafe_allow_html=True)
     
     
     # Final container for the text
     with st.container():
-        st.markdown("<h1 style='margin-top: 40px; color:#333333;'>Thank you for contacting us. If you have any further questions or need assistance, please don't hesitate to reach out. Our team is here to help. Have a great day!</h1>", unsafe_allow_html=True)
-        st.markdown("<h2 style='color: #333333; margin-left: 1000px; margin-top: 40px;'><i class='fas fa-map-marker-alt'></i> Address: Ring road 4, Quarter 4, Thoi Hoa Ward, Ben Cat Town, Binh Duong Province</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 style='margin-top:20px; font-size: 20px; color:#2F5C84;'>Thank you for contacting us. Should you require any further assistance or have additional inquiries, please feel free to ask. Our team is fully committed to providing support and ensuring your needs are met. Have a nice day!</h2>", unsafe_allow_html=True)
+        st.markdown("<h3 style='color:#826D3F; text-align: center; margin-left:0px; margin-top:20px; font-size: 15px;'><i class='fas fa-map-marker-alt'></i> Address: Ring road 4, Quarter 4, Thoi Hoa Ward, Ben Cat Town, Binh Duong Province</h3>", unsafe_allow_html=True)
 
 # Display the selected page
 if selected == "Home":
