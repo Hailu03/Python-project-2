@@ -121,7 +121,7 @@ page_bg_img = f"""
         padding: 30px 40px;
     }}
     .home-paragraph1 .home-paragraph-title {{
-        font-family: 'Times', sans-serif;
+        font-family: 'Nunito', sans-serif;
         font-size: 30px;
         font-weight: bold;
         color: black;
@@ -262,37 +262,44 @@ def home():
                 <img src="data:image/png;base64,{img2}" alt='Sleep Health & Lifestyle' style='width: 90%; height: 100%; margin-left: 60px; margin-right: 30px; margin-bottom: 50px; margin-top: 30px;'>
     """, unsafe_allow_html=True)
 
+
 def datasetPage():
     theme = get_img_as_base64('imgs/themaboutus.jpg')
 
     page_bg_img1 = f"""
     <style>
-        .main {{
-        position: relative;
-        z.index: 1;
-        background-color: white;
-    }}
-    .main::before {{
-        content: "";
-        background-image: url("data:image/png;base64,{img1}");
-        background-size: cover;
-        background-position: center; 
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        opacity: 0.65;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 0;
-    }}
+        .main::before {{
+            content: "";
+            background-image: url("data:image/png;base64,{theme}");
+            background-size: cover;
+            background-position: center; 
+            background-repeat: repeat;
+            background-attachment: fixed;
+            opacity: 0.65;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 0;
+        }}
         [data-testid="stSidebarContent"] {{
-        background-image: url("data:image/png;base64,{img}");
+        background-image: url("data:image/png;base64,{theme}");
         background-size: cover;
         }}
     </style>
     """
+    st.markdown(
+    """
+    <style>
+    body {
+        background-image: {img};
+        background-repeat: repeat;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True)
+
     st.markdown(page_bg_img1, unsafe_allow_html=True)
     st.title("Exploring our Dataset")
     st.write("The Health Dataset is a collection of data about people's health which contains 13 columns and 375 rows.")
@@ -417,7 +424,45 @@ def datasetPage():
 
 def graph():
     st.title("Graph")
-    st.write("This is the graph page.")
+    st.write("Welcome to our webpage showcasing a series of plots alongside their concise explanations, providing insightful interpretations of our data.")
+    theme = get_img_as_base64('imgs/themaboutus.jpg')
+
+    page_bg_img1 = f"""
+    <style>
+        .main {{
+            background-color: white;
+        }}
+        .main::before {{
+            content: "";
+            background-image: url("data:image/png;base64,{theme}");
+            background-size: cover;
+            background-position: center; 
+            background-repeat: repeat;
+            background-attachment: fixed;
+            opacity: 0.65;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 0;
+        }}
+        [data-testid="stSidebarContent"] {{
+        background-image: url("data:image/png;base64,{theme}");
+        background-size: cover;
+        }}
+    </style>
+    """
+    st.markdown(
+    """
+    <style>
+    body {
+        background-image: {img};
+        background-repeat: repeat;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True)
 
     graph_titles = [
         "Relationship between Gender, Occupation, and Sleep Duration",  
@@ -523,11 +568,7 @@ def contact():
 
     page_bg_img2 = f"""
     <style>
-        .main {{
-            position: relative;
-            z.index: 1;
-            background-color: #eee4da;
-        }}
+
         .main::before {{
             content: "";
             background-image: url("data:image/png;base64,{theme}");
@@ -543,12 +584,17 @@ def contact():
             bottom: 0;
             z-index: 0;
         }}
+        
         .member-info {{
             border-radius: 10px;
         }}
         [data-testid="stSidebarContent"] {{
         background-image: url("data:image/png;base64,{img}");
         background-size: cover;
+    }}
+        body {{
+        background-image: {img};
+        background-repeat: repeat;
     }}
     </style>
     """
