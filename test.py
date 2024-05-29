@@ -261,8 +261,6 @@ def home():
     st.markdown(f"""
                 <img src="data:image/png;base64,{img2}" alt='Sleep Health & Lifestyle' style='width: 90%; height: 100%; margin-left: 60px; margin-right: 30px; margin-bottom: 50px; margin-top: 30px;'>
     """, unsafe_allow_html=True)
-
-
 def datasetPage():
     theme = get_img_as_base64('imgs/themaboutus.jpg')
 
@@ -539,6 +537,8 @@ def graph():
             st.pyplot(plot9())
             st.markdown("<hr>", unsafe_allow_html=True)
             st.write("This violin plot, generated using ggplot2 in R, provides insights into the distribution of daily steps taken by individuals categorized by gender in the provided dataset. First, the distribution of the violin plots suggests a possible difference in the distribution of daily steps between genders. While the medians might be visually similar, the shapes of the violins hint at potential variations. Second, the spread of wider spread of the female violin might indicate greater variability in daily steps among females compared to males. ")
+      
+
 
 def contact():
     mem1 = get_img_as_base64('imgs/member1.jpg')
@@ -671,7 +671,6 @@ def contact():
     with st.container():
         st.markdown("<h2 style='margin-top:20px; font-size: 20px; color:#2F5C84;'>Thank you for contacting us. Should you require any further assistance or have additional inquiries, please feel free to ask. Our team is fully committed to providing support and ensuring your needs are met. Have a nice day!</h2>", unsafe_allow_html=True)
         st.markdown("<h3 style='color:#826D3F; text-align: center; margin-left:0px; margin-top:20px; font-size: 15px;'><i class='fas fa-map-marker-alt'></i> Address: Ring road 4, Quarter 4, Thoi Hoa Ward, Ben Cat Town, Binh Duong Province</h3>", unsafe_allow_html=True)
-
 # Display the selected page
 if selected == "Home":
     home()
