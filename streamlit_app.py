@@ -423,8 +423,51 @@ def datasetPage():
             st.error("File 'health.csv' not found.")
 
 def graph():
+<<<<<<< HEAD
     
     theme = get_img_as_base64('imgs/themaboutus.jpg')
+=======
+    st.title("Graph")
+    st.write("Welcome to our webpage showcasing a series of plots alongside their concise explanations, providing insightful interpretations of our data.")
+    theme = get_img_as_base64('imgs/themaboutus.jpg')
+
+    page_bg_img1 = f"""
+    <style>
+        .main {{
+            background-color: white;
+        }}
+        .main::before {{
+            content: "";
+            background-image: url("data:image/png;base64,{theme}");
+            background-size: cover;
+            background-position: center; 
+            background-repeat: repeat;
+            background-attachment: fixed;
+            opacity: 0.65;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 0;
+        }}
+        [data-testid="stSidebarContent"] {{
+        background-image: url("data:image/png;base64,{theme}");
+        background-size: cover;
+        }}
+    </style>
+    """
+    st.markdown(
+    """
+    <style>
+    body {
+        background-image: {img};
+        background-repeat: repeat;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True)
+>>>>>>> f014c1ff6ebc295f2847799460159c9e49adfe47
 
     page_bg_img1 = f"""
     <style>
