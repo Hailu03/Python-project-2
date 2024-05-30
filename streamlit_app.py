@@ -583,7 +583,7 @@ def graph():
             st.markdown("<hr>", unsafe_allow_html=True)
             st.write("This violin plot, generated using ggplot2 in R, provides insights into the distribution of daily steps taken by individuals categorized by gender in the provided dataset. First, the distribution of the violin plots suggests a possible difference in the distribution of daily steps between genders. While the medians might be visually similar, the shapes of the violins hint at potential variations. Second, the spread of wider spread of the female violin might indicate greater variability in daily steps among females compared to males. ")
 
-def contact():
+def About():
     mem1 = get_img_as_base64('imgs/member1.jpg')
     mem2 = get_img_as_base64('imgs/member2.jpg')
     mem3 = get_img_as_base64('imgs/member3.jpg')
@@ -720,7 +720,7 @@ if selected == "Home":
     home()
 elif selected == "Dataset":
     datasetPage()
-elif selected == "Contact":
-    contact()
+elif selected == "About us":
+    About()
 elif selected == "Graph":
     graph()
