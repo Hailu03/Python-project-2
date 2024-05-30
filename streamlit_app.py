@@ -33,7 +33,7 @@ st.set_page_config(layout="wide")
 # Create a sidebar for navigation using streamlit-option-menu
 with st.sidebar:
     selected = option_menu(
-        "Navigation", ["Home", "Dataset", "Graph", "Contact"],
+        "Navigation", ["Home", "Dataset", "Graph", "About us"],
         icons=['house', 'table', 'activity', 'envelope'], menu_icon="cast", default_index=0)
 
 @st.cache_data
