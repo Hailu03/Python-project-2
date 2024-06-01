@@ -1,9 +1,6 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
-def plot8():
-  # Read the CSV file
-    my_data = pd.read_csv("health.csv")
 
 def plot8():
     # Read the CSV file
@@ -24,3 +21,5 @@ def plot8():
     plt.ylabel("Daily Steps")
     plt.grid(color='gray', linestyle='-', linewidth=0.5, alpha=0.5)
     return plt.gcf()
+
+

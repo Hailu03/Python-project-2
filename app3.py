@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
-
 def plot3():
     # Read the CSV file
     my_data = pd.read_csv("health.csv", na_values=['None'])
@@ -13,7 +12,7 @@ def plot3():
     transition_matrix = pd.crosstab(my_data['Stress Level'], my_data['Sleep Disorder'])
 
     # Define a darker version of the "Blues" colormap
-    color = sns.color_palette("YlOrBr", as_cmap=True)
+    color = sns.color_palette("RdPu", 3, as_cmap=True)
 
     # Plotting the heatmap with adjusted color intensity and annotation color
     plt.figure(figsize=(10, 8))
@@ -21,6 +20,4 @@ def plot3():
     plt.title("Heatmap of Stress Level vs Sleep Disorder")
     plt.xlabel("Sleep Disorder")
     plt.ylabel("Stress Level")
-
     return plt.gcf()
-

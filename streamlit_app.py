@@ -7,7 +7,6 @@ from app3 import *
 from app4 import *
 from app5 import *
 from app6 import *
-from app7 import *
 from app8 import *
 from app9 import *
 from app10 import *
@@ -209,7 +208,7 @@ def home():
 
     # Display Lottie animation in the second column
     with col2:
-        st_lottie(lottie_sleep, key="flex_lottie_sleep", width=400, height=250)
+        st_lottie(lottie_sleep, key="flex_lottie_sleep", width=400, height=300)
 
     st.markdown(f"""
                 <style>
@@ -264,7 +263,7 @@ def home():
 
 
 def datasetPage():
-    theme = get_img_as_base64('imgs/themaboutus.jpg')
+    theme = get_img_as_base64('imgs/bot.jpeg')
 
     page_bg_img1 = f"""
     <style>
@@ -275,7 +274,7 @@ def datasetPage():
             background-position: center; 
             background-repeat: repeat;
             background-attachment: fixed;
-            opacity: 0.65;
+            opacity: 0.15;
             position: absolute;
             top: 0;
             left: 0;
@@ -284,7 +283,7 @@ def datasetPage():
             z-index: 0;
         }}
         [data-testid="stSidebarContent"] {{
-        background-image: url("data:image/png;base64,{theme}");
+        background-image: url("data:image/png;base64,{img}");
         background-size: cover;
         }}
     </style>
@@ -471,7 +470,6 @@ def graph():
         "Count of Gender across Physical Activity Levels",
         "Distribution of BMI by Gender",
         "Heart Rate by BMI Category",
-        "Relationship between Occupation and BMI Category",
         "Daily Steps: Trends by Age and Gender",
         "Daily Steps Distribution by Gender: A Look at the Violin Plot",
         "Stress Level by Occupation and Age",
@@ -520,11 +518,6 @@ def graph():
         st.pyplot(plot6())
         st.write("The plot shows the relationship between BMI category and heart rate. The data suggests that individuals in the obese category have the highest heart rate, followed by the overweight category. The normal weight and normal categories have similar heart rates. This bar chart provides insights into the relationship between BMI category and heart rate.")
         st.code(open("app7.py").read(), language='python')
-    elif selected_titles == "Relationship between Occupation and BMI Category":
-        st.write("Relationship between Occupation and BMI Category")
-        st.pyplot(plot7())
-        st.write("The boxplot shows the relationship between BMI category and heart rate. The data suggests that individuals in the obese category have the highest heart rate, followed by the overweight category. The normal weight and normal categories have similar heart rates. This boxplot provides insights into the relationship between BMI category and heart rate.")
-        st.code(open("app6.py").read(), language='python')
     elif selected_titles == "Daily Steps: Trends by Age and Gender":
         st.write(("Daily Steps: Trends by Age and Gender"))
         st.pyplot(plot8())
