@@ -7,6 +7,7 @@ from app3 import *
 from app4 import *
 from app5 import *
 from app6 import *
+from app7 import *
 from app8 import *
 from app9 import *
 from app10 import *
@@ -32,7 +33,7 @@ st.set_page_config(layout="wide")
 # Create a sidebar for navigation using streamlit-option-menu
 with st.sidebar:
     selected = option_menu(
-        "Navigation", ["Home", "Dataset", "Graph", "About us"],
+        "Navigation", ["Home", "Dataset", "Graph", "Contact"],
         icons=['house', 'table', 'activity', 'envelope'], menu_icon="cast", default_index=0)
 
 @st.cache_data
@@ -208,7 +209,7 @@ def home():
 
     # Display Lottie animation in the second column
     with col2:
-        st_lottie(lottie_sleep, key="flex_lottie_sleep", width=400, height=300)
+        st_lottie(lottie_sleep, key="flex_lottie_sleep", width=400, height=250)
 
     st.markdown(f"""
                 <style>
@@ -263,7 +264,7 @@ def home():
 
 
 def datasetPage():
-    theme = get_img_as_base64('imgs/bot.jpeg')
+    theme = get_img_as_base64('imgs/themaboutus.jpg')
 
     page_bg_img1 = f"""
     <style>
@@ -274,7 +275,7 @@ def datasetPage():
             background-position: center; 
             background-repeat: repeat;
             background-attachment: fixed;
-            opacity: 0.15;
+            opacity: 0.65;
             position: absolute;
             top: 0;
             left: 0;
@@ -283,7 +284,7 @@ def datasetPage():
             z-index: 0;
         }}
         [data-testid="stSidebarContent"] {{
-        background-image: url("data:image/png;base64,{img}");
+        background-image: url("data:image/png;base64,{theme}");
         background-size: cover;
         }}
     </style>
@@ -470,6 +471,7 @@ def graph():
         "Count of Gender across Physical Activity Levels",
         "Distribution of BMI by Gender",
         "Heart Rate by BMI Category",
+        "Relationship between Occupation and BMI Category",
         "Daily Steps: Trends by Age and Gender",
         "Daily Steps Distribution by Gender: A Look at the Violin Plot",
         "Stress Level by Occupation and Age",
@@ -478,30 +480,11 @@ def graph():
         "Distribution of Quality of Sleep",
     ]
 
-    st.markdown(page_bg_img1, unsafe_allow_html=True)
-
-    
-    st.title("Plot Explaination")
-    st.write("For the purpose of enhanced accessibility, we leverage charts on this page to represent our data about people's condition according to their occupation. This approach enables users to efficiently identify and grasp the information most relevant to their needs. .")    
-    options = ["Sleep", "BMI", "Daily steps"]
-    selected_option = st.radio("You can select your favorite category here ", options, horizontal=True)
-    
-    
-    if selected_option == "Sleep":
-        graph_titles = [
-        "Relationship between Gender, Occupation, and Sleep Duration",
-        "Heatmap of Stress Level vs Sleep Disorder"] 
-        selected_titles = st.selectbox("Select the graph to display", graph_titles, index=0, format_func=lambda x: x)
+    selected_titles = st.selectbox("Select the graph to display", graph_titles, index=0, format_func=lambda x: x)
 
     # Plot the selected graph
-        if selected_titles == "Heatmap of Stress Level vs Sleep Disorder":
-            st.write("Heatmap of Stress Level vs Sleep Disorder")
-            st.pyplot(plot3())
-            st.markdown("<hr>", unsafe_allow_html=True)  
-            st.write("The heatmap illustrates the relationship between stress levels and sleep disorders. The data suggests that individuals with high stress levels are more likely to have sleep disorders. The most common sleep disorder among high-stress individuals is insomnia, followed by sleep apnea and restless leg syndrome. In contrast, low-stress individuals are less likely to have sleep disorders, with insomnia being the most common sleep disorder. This heatmap provides insights into the relationship between stress levels and sleep disorders.") 
-      
-        elif selected_titles == "Relationship between Gender, Occupation, and Sleep Duration":
-            st.write("Relationship between Gender, Occupation, and Sleep Duration")
+    if selected_titles == "Relationship between Gender, Occupation, and Sleep Duration":
+        st.write("Relationship between Gender, Occupation, and Sleep Duration")
         selected_jobs = st.multiselect("Select the occupations to compare", df['Occupation'].unique(), default=['Accountant'])
 
         # Checkbox for view all data
@@ -510,7 +493,6 @@ def graph():
             selected_jobs = df['Occupation'].unique()
 
         st.plotly_chart(plot1(selected_jobs))
-        st.markdown("<hr>", unsafe_allow_html=True)
         st.write("The plot illustrates the average sleep duration across different genders and occupations. Females tend to sleep slightly longer than males, with healthcare professionals having the highest average sleep durations. On average, females sleep between 7.2 to 8.5 hours, while males sleep between 5.8 to 7.4 hours. Healthcare professionals average around 7.5 hours of sleep, followed by educators and IT professionals. Interestingly, there's some variation within occupations based on gender, though less pronounced among IT professionals.")
         st.code(open("app.py").read(), language='python')
     elif selected_titles == "Density of Sleep Duration by Gender and Stress Level":
@@ -538,6 +520,11 @@ def graph():
         st.pyplot(plot6())
         st.write("The plot shows the relationship between BMI category and heart rate. The data suggests that individuals in the obese category have the highest heart rate, followed by the overweight category. The normal weight and normal categories have similar heart rates. This bar chart provides insights into the relationship between BMI category and heart rate.")
         st.code(open("app7.py").read(), language='python')
+    elif selected_titles == "Relationship between Occupation and BMI Category":
+        st.write("Relationship between Occupation and BMI Category")
+        st.pyplot(plot7())
+        st.write("The boxplot shows the relationship between BMI category and heart rate. The data suggests that individuals in the obese category have the highest heart rate, followed by the overweight category. The normal weight and normal categories have similar heart rates. This boxplot provides insights into the relationship between BMI category and heart rate.")
+        st.code(open("app6.py").read(), language='python')
     elif selected_titles == "Daily Steps: Trends by Age and Gender":
         st.write(("Daily Steps: Trends by Age and Gender"))
         st.pyplot(plot8())
@@ -569,7 +556,7 @@ def graph():
         st.write("The chart shows the distribution of quality of sleep among surveyed individuals. The data suggests that most individuals have good quality sleep, followed by fair quality sleep. The pie chart provides insights into the distribution of quality of sleep.")
         st.code(open("app13.py").read(), language='python')
 
-def About():
+def contact():
     mem1 = get_img_as_base64('imgs/member1.jpg')
     mem2 = get_img_as_base64('imgs/member2.jpg')
     mem3 = get_img_as_base64('imgs/member3.jpg')
@@ -706,7 +693,7 @@ if selected == "Home":
     home()
 elif selected == "Dataset":
     datasetPage()
-elif selected == "About us":
-    About()
+elif selected == "Contact":
+    contact()
 elif selected == "Graph":
     graph()
