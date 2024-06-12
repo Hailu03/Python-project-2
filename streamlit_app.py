@@ -18,12 +18,14 @@ import base64
 from streamlit_lottie import st_lottie
 import json
 
+
 def load_lottiefile(file_path:str):
     with open(file_path, "r", encoding="utf-8") as f:
         return json.load(f)
 lottie_sleep = load_lottiefile("imgs/16.json")
 lottie_octo = load_lottiefile("imgs/octobus.json")
 lottie_chart = load_lottiefile("imgs/chart.json")
+
 
 df = pd.read_csv('health.csv')
 
@@ -261,8 +263,6 @@ def home():
     st.markdown(f"""
                 <img src="data:image/png;base64,{img2}" alt='Sleep Health & Lifestyle' style='width: 90%; height: 100%; margin-left: 60px; margin-right: 30px; margin-bottom: 50px; margin-top: 30px;'>
     """, unsafe_allow_html=True)
-
-
 def datasetPage():
     theme = get_img_as_base64('imgs/themaboutus.jpg')
 
@@ -423,46 +423,8 @@ def datasetPage():
             st.error("File 'health.csv' not found.")
 
 def graph():
-    st.title("Graph")
-    st.write("Welcome to our webpage showcasing a series of plots alongside their concise explanations, providing insightful interpretations of our data.")
+    
     theme = get_img_as_base64('imgs/themaboutus.jpg')
-
-    page_bg_img1 = f"""
-    <style>
-        .main {{
-            background-color: white;
-        }}
-        .main::before {{
-            content: "";
-            background-image: url("data:image/png;base64,{theme}");
-            background-size: cover;
-            background-position: center; 
-            background-repeat: repeat;
-            background-attachment: fixed;
-            opacity: 0.65;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 0;
-        }}
-        [data-testid="stSidebarContent"] {{
-        background-image: url("data:image/png;base64,{theme}");
-        background-size: cover;
-        }}
-    </style>
-    """
-    st.markdown(
-    """
-    <style>
-    body {
-        background-image: {img};
-        background-repeat: repeat;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True)
 
     page_bg_img1 = f"""
     <style>
@@ -503,11 +465,11 @@ def graph():
     
     st.title("Plot Explaination")
     st.write("For the purpose of enhanced accessibility, we leverage charts on this page to represent our data about people's condition according to their occupation. This approach enables users to efficiently identify and grasp the information most relevant to their needs. .")    
-    options = ["Sleep", "BMI", "Daily steps"]
+    options = ["Sleep Duration", "Sleep Quality", "Daily Steps"]
     selected_option = st.radio("You can select your favorite category here ", options, horizontal=True)
     
     
-    if selected_option == "Sleep":
+    if selected_option == "Sleep Duration":
         graph_titles = [
         "Relationship between Gender, Occupation, and Sleep Duration",
         "Heatmap of Stress Level vs Sleep Disorder"] 
@@ -516,12 +478,44 @@ def graph():
     # Plot the selected graph
         if selected_titles == "Heatmap of Stress Level vs Sleep Disorder":
             st.write("Heatmap of Stress Level vs Sleep Disorder")
-            st.pyplot(plot3())
+            st.plotly_chart(plot3())
             st.markdown("<hr>", unsafe_allow_html=True)  
             st.write("The heatmap illustrates the relationship between stress levels and sleep disorders. The data suggests that individuals with high stress levels are more likely to have sleep disorders. The most common sleep disorder among high-stress individuals is insomnia, followed by sleep apnea and restless leg syndrome. In contrast, low-stress individuals are less likely to have sleep disorders, with insomnia being the most common sleep disorder. This heatmap provides insights into the relationship between stress levels and sleep disorders.") 
-           
-                    
-                
+            code_text = """
+import pandas as pd
+import plotly.express as px
+
+def plot3():
+  # Read CSV, handling missing values consistently
+  my_data = pd.read_csv("health.csv", na_values=["None"])
+
+  # Fill missing values in "Sleep Disorder" with a specific value (replace "No Disorder" if needed)
+  my_data["Sleep Disorder"] = my_data["Sleep Disorder"].fillna("No Disorder")
+
+  # Create the transition matrix using crosstab
+  transition_matrix = pd.crosstab(my_data["Stress Level"], my_data["Sleep Disorder"], normalize="index")
+
+  # Create the plotly express heatmap
+  fig = px.imshow(
+      transition_matrix,
+      x=transition_matrix.columns,  # Use column labels directly
+      y=list(transition_matrix.index),
+      title="Heatmap of Stress Level vs Sleep Disorder (Normalized by Stress Level)",  # Updated title
+      labels=dict(x="Sleep Disorder", y="Stress Level"),  # Customize axis labels
+      color_continuous_scale=px.colors.sequential.YlOrBr,  # Set color scale
+  )
+
+  return fig
+
+
+"""
+
+
+# Create the expander and set it to be initially collapsed
+            with st.expander("Click here to reveal the code for this plot", expanded=False):
+                st.code(code_text, language="python")
+
+
         elif selected_titles == "Relationship between Gender, Occupation, and Sleep Duration":
             st.write("Relationship between Gender, Occupation, and Sleep Duration")
 
@@ -530,21 +524,69 @@ def graph():
             occupation_unique = df['Occupation'].unique()
             select_all_occupations = st.checkbox("Select All Occupations", value=False)
             if select_all_occupations:
-                occupation_filter = st.multiselect("Occupation", options=occupation_unique, default=['Accountant'])  # Select all by default
+                occupation_filter = st.multiselect("Occupation", options=occupation_unique, default=occupation_unique)  # Select all by default
             else:
                 occupation_filter = st.multiselect("Occupation", options=occupation_unique)
 
         st.plotly_chart(plot1(occupation_filter))
         st.markdown("<hr>", unsafe_allow_html=True)
-        st.write("The plot illustrates the average sleep duration across different genders and occupations. Females tend to sleep slightly longer than males, with healthcare professionals having the highest average sleep durations. On average, females sleep between 7.2 to 8.5 hours, while males sleep between 5.8 to 7.4 hours. Healthcare professionals average around 7.5 hours of sleep, followed by educators and IT professionals. Interestingly, there's some variation within occupations based on gender, though less pronounced among IT professionals.")
-       
+        st.write("The plot illustrates the average sleep duration across different genders and occupations. Females tend to sleep slightly longer than males, with healthcare professionals having the highest average sleep durations. On average, females sleep between 7.2 to 8.5 hours, while males sleep between 5.8 to 7.4 hours. Healthcare professionals average around 7.5 hours of sleep, followed by educators and IT professionals. Interestingly, there's some variation within occupations based on gender, though less pronounced among IT professionals.")        
+        # Define the code to be displayed
+        code_text = """
+import plotly.express as px
+import pandas as pd
+
+def plot1(jobs):
+    # Read the CSV file
+    my_data = pd.read_csv("health.csv")
+
+    # Filter data for the specified occupations
+    filtered_data = my_data[my_data['Occupation'].isin(jobs)]
+
+    # Create the plot
+    fig = px.bar(filtered_data,
+                 x='Gender',
+                 y='Sleep Duration',
+                 color='Occupation',
+                 barmode='group',  # Group bars for comparison
+                 category_orders={'Gender': ['Male', 'Female']},
+                 color_discrete_sequence=px.colors.qualitative.Plotly,
+                 height=600,        # Adjust height for better display
+                 width=800)         # Adjust width for better display
+
+    # Update the layout
+    fig.update_layout(
+        title=f'Relationship between Gender and Sleep Duration for {", ".join(jobs)}',
+        xaxis_title='Gender',
+        yaxis_title='Average Sleep Duration (hours)',
+        margin=dict(t=50),
+        font=dict(size=12),
+        legend_title_text='Occupation'
+    )
+
+    # Update traces for better aesthetics
+    fig.update_traces(
+        marker=dict(line=dict(width=0.5, color='DarkSlateGrey')),
+        opacity=0.8
+    )
+
+    # Adjust the x-axis and y-axis to make the plots more readable
+    fig.update_xaxes(tickfont=dict(size=14))
+    fig.update_yaxes(tickfont=dict(size=14))
+
+    return fig
+"""
+
+# Create the expander and set it to be initially collapsed
+        with st.expander("Click here to reveal the code for this plot", expanded=False):
+            st.code(code_text, language="python")
                
     
-    elif selected_option == "BMI": 
+    elif selected_option == "Sleep Quality": 
     
         Graph_BMI = [
-      "Distribution of BMI by Gender",
-      "Heart Rate by BMI Category",
+      "Relationship Between Sleep Quality and Heart Rate Among Surveyed Individuals",
+      "Distribution of Quality of Sleep",
       ]   
      
      
@@ -552,19 +594,104 @@ def graph():
         selected_titles = st.selectbox("Select the graph to display", Graph_BMI, index=0, format_func=lambda x: x)
                
      
-        if selected_titles == "Distribution of BMI by Gender":
-            st.write("Distribution of BMI by Gender")
-            st.pyplot(plot5())
+        if selected_titles == "Relationship Between Sleep Quality and Heart Rate Among Surveyed Individuals":
+            st.write("Relationship Between Sleep Quality and Heart Rate Among Surveyed Individuals")
+            st.plotly_chart(plot12())
             st.markdown("<hr>", unsafe_allow_html=True)
-            st.write("The bar chart presents data about the distribution of participants categorized by BMI. According to the graph, females outweigh males in the Normal Weight and Overweight categories. In contrast, the Normal category shows that men account for 131 people which is double compared to women. Finally, the Obese people also illustrate the same trend where there is only one female is obese, nine times lower than males")
+            st.write("The pie chart shows the relationship between sleep quality and heart rate among surveyed individuals. The data suggests that individuals with poor sleep quality have higher heart rates than those with good sleep quality. The pie chart provides insights into the relationship between sleep quality and heart rate.")
+            code_text = """
+
+import pandas as pd
+import plotly.express as px
+import plotly.io as pio
+
+def plot12():
+    # Read the CSV file
+    my_data = pd.read_csv("health.csv")
+
+    # Group by 'Quality of Sleep' and calculate count and percentage
+    my_data_summary = my_data.groupby('Quality of Sleep').size().reset_index(name='count')
+    my_data_summary['percentage'] = round((my_data_summary['count'] / my_data_summary['count'].sum()) * 100, 1)
+
+    # Define colors for the plot
+    darker_blues = px.colors.sequential.Blues[:len(my_data_summary['Quality of Sleep'].unique())]  # Use Plotly colors
+
+    # Create the interactive pie chart with px.pie
+    fig = px.pie(
+        my_data_summary,
+        values='count',  # Values for pie slices
+        names='Quality of Sleep',  # Column for category names
+        color_discrete_sequence=darker_blues,  # Set color scale
+        title='Relationship Between Sleep Quality and Heart Rate Among Surveyed Individuals',  # Set title
+        labels={'count': 'Count', 'Quality of Sleep': 'Sleep Quality'},  # Customize labels (optional)
+        hole=0.4,  # Create a donut-like pie chart (optional)
+    )
+
+    # Update layout for aesthetics (optional)
+    fig.update_layout(legend=dict(x=1, y=1, xanchor="right", yanchor="top"))  # Places legend at top right corner anchored to top-right corner
+
+    # Save the figure as a PNG image
+    pio.write_image(fig, 'figure.png')
+
+    return fig
+"""
+
+# Create the expander and set it to be initially collapsed
+            with st.expander("Click here to reveal the code for this plot", expanded=False):
+                st.code(code_text, language="python")
         
-        elif selected_titles == "Heart Rate by BMI Category":
-            st.write("Heart Rate by BMI Category")
-            st.pyplot(plot6())
+        elif selected_titles == "Distribution of Quality of Sleep":
+            st.write("Distribution of Quality of Sleep")
+            st.plotly_chart(plot13())
             st.markdown("<hr>", unsafe_allow_html=True)
-            st.write("The plot shows the relationship between BMI category and heart rate. The data suggests that individuals in the obese category have the highest heart rate, followed by the overweight category. The normal weight and normal categories have similar heart rates. This bar chart provides insights into the relationship between BMI category and heart rate.")
-        
-    elif selected_option == "Daily steps":
+            st.write("The chart shows the distribution of quality of sleep among surveyed individuals. The data suggests that most individuals have good quality sleep, followed by fair quality sleep. The pie chart provides insights into the distribution of quality of sleep.")
+            code_text = """
+import pandas as pd
+import plotly.express as px
+
+def plot13():
+  # Assuming my_data is a pandas DataFrame with columns 'Quality of Sleep' and 'Gender'
+  # Read the CSV file (replace "health.csv" with your actual filename)
+  my_data = pd.read_csv("health.csv")
+
+  # Rename the column
+  my_data.rename(columns={'Age_Group': 'Quality of Sleep'}, inplace=True)
+
+  # Define custom color palette
+  custom_palette = {"Male": "skyblue", "Female": "salmon"}
+
+  # Calculate count for each quality of sleep and gender combination
+  count_data = my_data.groupby(['Quality of Sleep', 'Gender']).size().to_frame(name='count').reset_index()
+
+  # Unpack the color dictionary into a list
+  colors = list(custom_palette.values())  # ["skyblue", "salmon"]
+  
+
+  # Create the plot using px.bar with facet_col
+  fig = px.bar(
+    count_data, 
+    x="Quality of Sleep", 
+    y="count", 
+    color="Gender",  # Color applies to each bar segment
+    barmode="stack",  # Stack bars for each gender
+    facet_col="Gender", 
+    height=600,
+    title="Distribution of Quality of Sleep by Gender"
+)
+
+
+  return fig
+
+
+
+
+"""
+
+# Create the expander and set it to be initially collapsed
+            with st.expander("Click here to reveal the code for this plot", expanded=False):
+                st.code(code_text, language="python")
+            
+    elif selected_option == "Daily Steps":
         Graph_stress = [
         "Daily Steps: Trends by Age and Gender",
         "Daily Steps Distribution by Gender: A Look at the Violin Plot"
@@ -574,15 +701,80 @@ def graph():
       
         if selected_titles == "Daily Steps: Trends by Age and Gender":
             st.write("Daily Steps: Trends by Age and Gender")
-            st.pyplot(plot8())
+            st.plotly_chart(plot8())
             st.markdown("<hr>", unsafe_allow_html=True)
             st.write("The plot depicts the relationship between daily steps, age, and gender. It likely stems from a health or fitness study that tracked daily steps taken by participants of different ages and genders. The data is visualized using two elements. The first element is colored lines which separate trend lines are shown for each gender, colored light blue possibly for males and salmon possibly for females. The second element is data points.")
-        
+            code_text = """
+import plotly.express as px
+import pandas as pd
+
+
+def plot8():
+  
+  my_data = pd.read_csv("health.csv")
+
+  
+  my_data.columns = my_data.columns.str.replace(' ', '_')
+
+  # Create an interactive line plot with Plotly Express
+  fig = px.scatter(my_data, x='Age', y='Daily_Steps', color='Gender',
+                    title="Daily Steps: Trends by Age and Gender",
+                    labels={'Age': 'Age', 'Daily_Steps': 'Daily Steps', 'Gender': 'Gender'},
+                    template='plotly_white')
+  # Add points to the line plot
+  fig.update_traces(mode='markers+lines')
+  
+  return fig 
+
+
+"""
+
+# Create the expander and set it to be initially collapsed
+            with st.expander("Click here to reveal the code for this plot", expanded=False):
+                st.code(code_text, language="python")
+                
+                
         elif selected_titles == "Daily Steps Distribution by Gender: A Look at the Violin Plot":
             st.write("Daily Steps Distribution by Gender: A Look at the Violin Plot")
-            st.pyplot(plot9())
+            st.plotly_chart(plot9())
             st.markdown("<hr>", unsafe_allow_html=True)
             st.write("This violin plot, generated using ggplot2 in R, provides insights into the distribution of daily steps taken by individuals categorized by gender in the provided dataset. First, the distribution of the violin plots suggests a possible difference in the distribution of daily steps between genders. While the medians might be visually similar, the shapes of the violins hint at potential variations. Second, the spread of wider spread of the female violin might indicate greater variability in daily steps among females compared to males. ")
+            code_text = """
+import plotly.express as px
+import pandas as pd
+
+def plot9(data_path="health.csv"):
+ 
+
+  # Read the CSV file with error handling
+  my_data = pd.read_csv(data_path)
+
+  # Replace spaces in column names with underscores
+  my_data.columns = my_data.columns.str.replace(' ', '_')
+
+  # Define a color dictionary for distinct colors
+  color_map = {"Female": "lightblue", "Male": "coral"}
+
+  # Create an interactive violin plot with distinct colors
+  fig = px.violin(
+      my_data,
+      x="Gender",
+      y="Daily_Steps",
+      color="Gender",  # Use 'Gender' for coloring
+      color_discrete_sequence=list(color_map.values()),  # Set distinct colors
+      box=True,
+      title="Daily Steps Distribution by Gender: An Interactive Plot",
+  )
+
+  return fig
+
+
+"""
+
+# Create the expander and set it to be initially collapsed
+            with st.expander("Click here to reveal the code for this plot", expanded=False):
+                st.code(code_text, language="python")
+
 
 def contact():
     mem1 = get_img_as_base64('imgs/member1.jpg')
@@ -725,3 +917,7 @@ elif selected == "Contact":
     contact()
 elif selected == "Graph":
     graph()
+    
+
+
+    
