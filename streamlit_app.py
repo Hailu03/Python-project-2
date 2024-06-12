@@ -7,7 +7,6 @@ from app3 import *
 from app4 import *
 from app5 import *
 from app6 import *
-from app7 import *
 from app8 import *
 from app9 import *
 from app10 import *
@@ -35,7 +34,7 @@ st.set_page_config(layout="wide")
 # Create a sidebar for navigation using streamlit-option-menu
 with st.sidebar:
     selected = option_menu(
-        "Navigation", ["Home", "Dataset", "Graph", "Contact"],
+        "Navigation", ["Home", "Dataset", "Graph", "About us"],
         icons=['house', 'table', 'activity', 'envelope'], menu_icon="cast", default_index=0)
 
 @st.cache_data
@@ -211,7 +210,7 @@ def home():
 
     # Display Lottie animation in the second column
     with col2:
-        st_lottie(lottie_sleep, key="flex_lottie_sleep", width=400, height=250)
+        st_lottie(lottie_sleep, key="flex_lottie_sleep", width=400, height=300)
 
     st.markdown(f"""
                 <style>
@@ -264,7 +263,7 @@ def home():
                 <img src="data:image/png;base64,{img2}" alt='Sleep Health & Lifestyle' style='width: 90%; height: 100%; margin-left: 60px; margin-right: 30px; margin-bottom: 50px; margin-top: 30px;'>
     """, unsafe_allow_html=True)
 def datasetPage():
-    theme = get_img_as_base64('imgs/themaboutus.jpg')
+    theme = get_img_as_base64('imgs/bot.jpeg')
 
     page_bg_img1 = f"""
     <style>
@@ -275,7 +274,7 @@ def datasetPage():
             background-position: center; 
             background-repeat: repeat;
             background-attachment: fixed;
-            opacity: 0.65;
+            opacity: 0.15;
             position: absolute;
             top: 0;
             left: 0;
@@ -284,7 +283,7 @@ def datasetPage():
             z-index: 0;
         }}
         [data-testid="stSidebarContent"] {{
-        background-image: url("data:image/png;base64,{theme}");
+        background-image: url("data:image/png;base64,{img}");
         background-size: cover;
         }}
     </style>
@@ -423,11 +422,19 @@ def datasetPage():
             st.error("File 'health.csv' not found.")
 
 def graph():
+<<<<<<< HEAD
     
+    theme = get_img_as_base64('imgs/themaboutus.jpg')
+=======
+    st.title("Graph")
+    st.write("Welcome to our webpage showcasing a series of plots alongside their concise explanations, providing insightful interpretations of our data.")
     theme = get_img_as_base64('imgs/themaboutus.jpg')
 
     page_bg_img1 = f"""
     <style>
+        .main {{
+            background-color: white;
+        }}
         .main::before {{
             content: "";
             background-image: url("data:image/png;base64,{theme}");
@@ -459,6 +466,22 @@ def graph():
     </style>
     """,
     unsafe_allow_html=True)
+>>>>>>> d272172bc00c8f1d80a0514d00ebeaae3a1a3f2b
+
+    graph_titles = [
+        "Relationship between Gender, Occupation, and Sleep Duration",  
+        "Density of Sleep Duration by Gender and Stress Level",
+        "Heatmap of Stress Level vs Sleep Disorder",
+        "Count of Gender across Physical Activity Levels",
+        "Distribution of BMI by Gender",
+        "Heart Rate by BMI Category",
+        "Daily Steps: Trends by Age and Gender",
+        "Daily Steps Distribution by Gender: A Look at the Violin Plot",
+        "Stress Level by Occupation and Age",
+        "Distribution of Stress Levels by Age Group",
+        "Relationship Between Sleep Quality and Heart Rate Among Surveyed Individuals",
+        "Distribution of Quality of Sleep",
+    ]
 
     st.markdown(page_bg_img1, unsafe_allow_html=True)
 
@@ -530,6 +553,7 @@ def plot3():
 
         st.plotly_chart(plot1(occupation_filter))
         st.markdown("<hr>", unsafe_allow_html=True)
+<<<<<<< HEAD
         st.write("The plot illustrates the average sleep duration across different genders and occupations. Females tend to sleep slightly longer than males, with healthcare professionals having the highest average sleep durations. On average, females sleep between 7.2 to 8.5 hours, while males sleep between 5.8 to 7.4 hours. Healthcare professionals average around 7.5 hours of sleep, followed by educators and IT professionals. Interestingly, there's some variation within occupations based on gender, though less pronounced among IT professionals.")        
         # Define the code to be displayed
         code_text = """
@@ -775,8 +799,67 @@ def plot9(data_path="health.csv"):
             with st.expander("Click here to reveal the code for this plot", expanded=False):
                 st.code(code_text, language="python")
 
+=======
+        st.write("The plot illustrates the average sleep duration across different genders and occupations. Females tend to sleep slightly longer than males, with healthcare professionals having the highest average sleep durations. On average, females sleep between 7.2 to 8.5 hours, while males sleep between 5.8 to 7.4 hours. Healthcare professionals average around 7.5 hours of sleep, followed by educators and IT professionals. Interestingly, there's some variation within occupations based on gender, though less pronounced among IT professionals.")
+        st.code(open("app.py").read(), language='python')
+    elif selected_titles == "Density of Sleep Duration by Gender and Stress Level":
+        st.write("Density of Sleep Duration by Gender and Stress Level")
+        st.pyplot(plot2())
+        st.write("The graphics show gender distribution, sleep duration variances, and stress level impacts on sleep. Sleep analysis by gender indicates females average 7 hours of sleep, slightly more than males at 6.5 hours. High-stress individuals sleep 5.5 hours, significantly less than low-stress counterparts averaging 7.5 hours. Further examination reveals high-stress individuals, regardless of gender, sleep about 30 minutes less than low-stress individuals. High-stress females sleep roughly 6.8 hours, while high-stress males sleep approximately 6.5 hours, highlighting stress as a key factor in sleep deprivation.")
+        st.code(open("app2.py").read(), language='python')
+    elif selected_titles == "Heatmap of Stress Level vs Sleep Disorder":
+        st.write("Heatmap of Stress Level vs Sleep Disorder")
+        st.pyplot(plot3())
+        st.write("The heatmap illustrates the relationship between stress levels and sleep disorders. The data suggests that individuals with high stress levels are more likely to have sleep disorders. The most common sleep disorder among high-stress individuals is insomnia, followed by sleep apnea and restless leg syndrome. In contrast, low-stress individuals are less likely to have sleep disorders, with insomnia being the most common sleep disorder. This heatmap provides insights into the relationship between stress levels and sleep disorders.")
+        st.code(open("app3.py").read(), language='python')
+    elif selected_titles == "Count of Gender across Physical Activity Levels":
+        st.write("Count of Gender across Physical Activity Levels")
+        st.pyplot(plot4())
+        st.write("This chart examines the relationship between physical activity level and heart rate, separating the data by gender. The graph illustrates that both genders have similar physical activity levels. When this level is below 60, females’ level is two points lower than males. The opposite is true when the level is above 60 when the physical activity level of women is one point higher than men. ")
+        st.code(open("app4.py").read(), language='python')
+    elif selected_titles == "Distribution of BMI by Gender":
+        st.write("Distribution of BMI by Gender")
+        st.pyplot(plot5())
+        st.write("The bar chart presents data about the distribution of participants categorized by BMI. According to the graph, females outweigh males in the Normal Weight and Overweight categories. In contrast, the Normal category shows that men account for 131 people which is double compared to women. Finally, the Obese people also illustrate the same trend where there is only one female is obese, nine times lower than males")
+        st.code(open("app5.py").read(), language='python')
+    elif selected_titles == "Heart Rate by BMI Category":
+        st.write("Heart Rate by BMI Category")
+        st.pyplot(plot6())
+        st.write("The plot shows the relationship between BMI category and heart rate. The data suggests that individuals in the obese category have the highest heart rate, followed by the overweight category. The normal weight and normal categories have similar heart rates. This bar chart provides insights into the relationship between BMI category and heart rate.")
+        st.code(open("app7.py").read(), language='python')
+    elif selected_titles == "Daily Steps: Trends by Age and Gender":
+        st.write(("Daily Steps: Trends by Age and Gender"))
+        st.pyplot(plot8())
+        st.write("The plot depicts the relationship between daily steps, age, and gender. It likely stems from a health or fitness study that tracked daily steps taken by participants of different ages and genders. The data is visualized using two elements. The first element is colored lines which separate trend lines are shown for each gender, colored light blue possibly for males and salmon possibly for females. The second element is data points.")
+        st.code(open("app8.py").read(), language='python')
+    elif selected_titles == "Daily Steps Distribution by Gender: A Look at the Violin Plot":
+        st.write("Daily Steps Distribution by Gender: A Look at the Violin Plot")
+        st.pyplot(plot9())
+        st.write("This violin plot, generated using ggplot2 in R, provides insights into the distribution of daily steps taken by individuals categorized by gender in the provided dataset. First, the distribution of the violin plots suggests a possible difference in the distribution of daily steps between genders. While the medians might be visually similar, the shapes of the violins hint at potential variations. Second, the spread of wider spread of the female violin might indicate greater variability in daily steps among females compared to males. ")
+        st.code(open("app9.py").read(), language='python')
+    elif selected_titles == ("Stress Level by Occupation and Age"):
+        st.write(("Stress Level by Occupation and Age"))
+        st.pyplot(plot10())
+        st.write("Bubble charts show individuals' stress levels based on occupation and personality. The size of the bubbles indicates stress levels, while their color reflects gender. Overall, it is possible to see fluctuations in stress levels between men and women in different occupational groups. It shows that the group of people working as teachers, software engineers, lawyers, engineers, and doctors have a closer viewing distance and a wider bending angle than the other group, showing that the job requires more precision, requiring looked closer and bent more than less precise work, which caused more nervous tension and pain in the other groups.")
+        st.code(open("app10.py").read(), language='python')
+    elif selected_titles == ("Distribution of Stress Levels by Age Group"):
+        st.write(("Distribution of Stress Levels by Age Group"))
+        st.pyplot(plot11())
+        st.write("The plot shows the distribution of stress levels by age group. The data suggests that individuals in the 20-29 age group have the highest stress levels, followed by the 30-39 age group. The 40-49 age group has the lowest stress levels. This bar chart provides insights into the distribution of stress levels by age group.")
+        st.code(open("app11.py").read(), language='python')
+    elif selected_titles == ("Relationship Between Sleep Quality and Heart Rate Among Surveyed Individuals"):
+        st.write(("Relationship Between Sleep Quality and Heart Rate Among Surveyed Individuals"))
+        st.pyplot(plot12())
+        st.write("The pie chart shows the relationship between sleep quality and heart rate among surveyed individuals. The data suggests that individuals with poor sleep quality have higher heart rates than those with good sleep quality. The pie chart provides insights into the relationship between sleep quality and heart rate.")
+        st.code(open("app12.py").read(), language='python')
+    elif selected_titles == ("Distribution of Quality of Sleep"):
+        st.write(("Distribution of Quality of Sleep"))
+        st.pyplot(plot13())
+        st.write("The chart shows the distribution of quality of sleep among surveyed individuals. The data suggests that most individuals have good quality sleep, followed by fair quality sleep. The pie chart provides insights into the distribution of quality of sleep.")
+        st.code(open("app13.py").read(), language='python')
+>>>>>>> d272172bc00c8f1d80a0514d00ebeaae3a1a3f2b
 
-def contact():
+def About():
     mem1 = get_img_as_base64('imgs/member1.jpg')
     mem2 = get_img_as_base64('imgs/member2.jpg')
     mem3 = get_img_as_base64('imgs/member3.jpg')
@@ -913,11 +996,14 @@ if selected == "Home":
     home()
 elif selected == "Dataset":
     datasetPage()
-elif selected == "Contact":
-    contact()
+elif selected == "About us":
+    About()
 elif selected == "Graph":
     graph()
+<<<<<<< HEAD
     
 
 
     
+=======
+>>>>>>> d272172bc00c8f1d80a0514d00ebeaae3a1a3f2b
