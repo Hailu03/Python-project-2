@@ -8,8 +8,11 @@ def plot1(jobs):
     # Filter data for the specified occupations
     filtered_data = my_data[my_data['Occupation'].isin(jobs)]
 
+    # Group by Gender and Occupation to calculate the average sleep duration
+    averaged_data = filtered_data.groupby(['Gender', 'Occupation'], as_index=False)['Sleep Duration'].mean()
+
     # Create the plot
-    fig = px.bar(filtered_data,
+    fig = px.bar(averaged_data,
                  x='Gender',
                  y='Sleep Duration',
                  color='Occupation',

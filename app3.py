@@ -1,13 +1,10 @@
 import pandas as pd
-<<<<<<< HEAD
 import plotly.express as px
 
 
 
 
 
-=======
->>>>>>> d272172bc00c8f1d80a0514d00ebeaae3a1a3f2b
 def plot3():
   # Read CSV, handling missing values consistently
   my_data = pd.read_csv("health.csv", na_values=["None"])
@@ -18,7 +15,6 @@ def plot3():
   # Create the transition matrix using crosstab
   transition_matrix = pd.crosstab(my_data["Stress Level"], my_data["Sleep Disorder"], normalize="index")
 
-<<<<<<< HEAD
   # Create the plotly express heatmap
   fig = px.imshow(
       transition_matrix,
@@ -30,15 +26,13 @@ def plot3():
   )
 
   return fig
-=======
     # Define a darker version of the "Blues" colormap
-    color = sns.color_palette("RdPu", 3, as_cmap=True)
+    # color = sns.color_palette("RdPu", 3, as_cmap=True)
 
-    # Plotting the heatmap with adjusted color intensity and annotation color
-    plt.figure(figsize=(10, 8))
-    sns.heatmap(transition_matrix, annot=True, cmap=color, fmt='d', vmin=0, vmax=transition_matrix.values.max() * 0.8, annot_kws={"color": 'black', "alpha": 0.7})
-    plt.title("Heatmap of Stress Level vs Sleep Disorder")
-    plt.xlabel("Sleep Disorder")
-    plt.ylabel("Stress Level")
-    return plt.gcf()
->>>>>>> d272172bc00c8f1d80a0514d00ebeaae3a1a3f2b
+    # # Plotting the heatmap with adjusted color intensity and annotation color
+    # plt.figure(figsize=(10, 8))
+    # sns.heatmap(transition_matrix, annot=True, cmap=color, fmt='d', vmin=0, vmax=transition_matrix.values.max() * 0.8, annot_kws={"color": 'black', "alpha": 0.7})
+    # plt.title("Heatmap of Stress Level vs Sleep Disorder")
+    # plt.xlabel("Sleep Disorder")
+    # plt.ylabel("Stress Level")
+    # return plt.gcf()

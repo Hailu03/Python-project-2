@@ -422,10 +422,8 @@ def datasetPage():
             st.error("File 'health.csv' not found.")
 
 def graph():
-<<<<<<< HEAD
     
     theme = get_img_as_base64('imgs/themaboutus.jpg')
-=======
     st.title("Graph")
     st.write("Welcome to our webpage showcasing a series of plots alongside their concise explanations, providing insightful interpretations of our data.")
     theme = get_img_as_base64('imgs/themaboutus.jpg')
@@ -466,7 +464,6 @@ def graph():
     </style>
     """,
     unsafe_allow_html=True)
->>>>>>> d272172bc00c8f1d80a0514d00ebeaae3a1a3f2b
 
     graph_titles = [
         "Relationship between Gender, Occupation, and Sleep Duration",  
@@ -553,7 +550,6 @@ def plot3():
 
         st.plotly_chart(plot1(occupation_filter))
         st.markdown("<hr>", unsafe_allow_html=True)
-<<<<<<< HEAD
         st.write("The plot illustrates the average sleep duration across different genders and occupations. Females tend to sleep slightly longer than males, with healthcare professionals having the highest average sleep durations. On average, females sleep between 7.2 to 8.5 hours, while males sleep between 5.8 to 7.4 hours. Healthcare professionals average around 7.5 hours of sleep, followed by educators and IT professionals. Interestingly, there's some variation within occupations based on gender, though less pronounced among IT professionals.")        
         # Define the code to be displayed
         code_text = """
@@ -799,7 +795,6 @@ def plot9(data_path="health.csv"):
             with st.expander("Click here to reveal the code for this plot", expanded=False):
                 st.code(code_text, language="python")
 
-=======
         st.write("The plot illustrates the average sleep duration across different genders and occupations. Females tend to sleep slightly longer than males, with healthcare professionals having the highest average sleep durations. On average, females sleep between 7.2 to 8.5 hours, while males sleep between 5.8 to 7.4 hours. Healthcare professionals average around 7.5 hours of sleep, followed by educators and IT professionals. Interestingly, there's some variation within occupations based on gender, though less pronounced among IT professionals.")
         st.code(open("app.py").read(), language='python')
     elif selected_titles == "Density of Sleep Duration by Gender and Stress Level":
@@ -857,7 +852,6 @@ def plot9(data_path="health.csv"):
         st.pyplot(plot13())
         st.write("The chart shows the distribution of quality of sleep among surveyed individuals. The data suggests that most individuals have good quality sleep, followed by fair quality sleep. The pie chart provides insights into the distribution of quality of sleep.")
         st.code(open("app13.py").read(), language='python')
->>>>>>> d272172bc00c8f1d80a0514d00ebeaae3a1a3f2b
 
 def About():
     mem1 = get_img_as_base64('imgs/member1.jpg')
@@ -1000,10 +994,7 @@ elif selected == "About us":
     About()
 elif selected == "Graph":
     graph()
-<<<<<<< HEAD
     
 
 
     
-=======
->>>>>>> d272172bc00c8f1d80a0514d00ebeaae3a1a3f2b

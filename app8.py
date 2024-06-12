@@ -1,9 +1,6 @@
 import plotly.express as px
 import pandas as pd
-<<<<<<< HEAD
 
-=======
->>>>>>> d272172bc00c8f1d80a0514d00ebeaae3a1a3f2b
 
 def plot8():
   
@@ -22,16 +19,13 @@ def plot8():
   
   return fig 
 
-<<<<<<< HEAD
-=======
     # Add points to the line plot
-    sns.scatterplot(data=my_data, x='Age', y='Daily_Steps', hue='Gender', palette=["lightblue", "salmon"], s=50)
+    # sns.scatterplot(data=my_data, x='Age', y='Daily_Steps', hue='Gender', palette=["lightblue", "salmon"], s=50)
 
-    plt.title("Daily Steps: Trends by Age and Gender")
-    plt.xlabel("Age")
-    plt.ylabel("Daily Steps")
-    plt.grid(color='gray', linestyle='-', linewidth=0.5, alpha=0.5)
-    return plt.gcf()
+    # plt.title("Daily Steps: Trends by Age and Gender")
+    # plt.xlabel("Age")
+    # plt.ylabel("Daily Steps")
+    # plt.grid(color='gray', linestyle='-', linewidth=0.5, alpha=0.5)
+    # return plt.gcf()
 
 
->>>>>>> d272172bc00c8f1d80a0514d00ebeaae3a1a3f2b
