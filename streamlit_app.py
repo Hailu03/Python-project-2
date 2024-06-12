@@ -352,7 +352,7 @@ def datasetPage():
                 <div class='datasetPage home-paragraph'>
                         <p>- Focus on Sleep Health: The dataset directly addresses a crucial aspect of well-being, making it inherently interesting.</p>
                         <p>- Organized Structure: The clear layout with distinct variables (13 in total) facilitates easy analysis and exploration.</p>
-                        <p>- Holistic Viewpoint: It captures factors like sleep duration, quality, physical activity, stress, and even body mass index, providing a comprehensive picture of each participant's lifestyle.</p>
+                        <p>- Holistic Viewpoint: It captures factors such as sleep duration, quality, physical activity, stress, and even body mass index, providing a comprehensive picture of each participant's lifestyle.</p>
                         <p>- Potential for Discovery: By analyzing these variables, we can potentially uncover significant relationships between sleep health and factors like sleep disorders or overall health.</p>
                 </div>
                 """,
@@ -481,27 +481,12 @@ def graph():
     st.markdown(page_bg_img1, unsafe_allow_html=True)
 
     
-    st.title("Plot Explaination")
-    st.write("For the purpose of enhanced accessibility, we leverage charts on this page to represent our data about people's condition according to their occupation. This approach enables users to efficiently identify and grasp the information most relevant to their needs. .")    
-    options = ["Sleep", "BMI", "Daily steps"]
-    selected_option = st.radio("You can select your favorite category here ", options, horizontal=True)
-    
-    
-    if selected_option == "Sleep":
-        graph_titles = [
-        "Relationship between Gender, Occupation, and Sleep Duration",
-        "Heatmap of Stress Level vs Sleep Disorder"] 
-        selected_titles = st.selectbox("Select the graph to display", graph_titles, index=0, format_func=lambda x: x)
+    selected_titles = st.selectbox("Select a graph to view", graph_titles)    
 
     # Plot the selected graph
-        if selected_titles == "Heatmap of Stress Level vs Sleep Disorder":
-            st.write("Heatmap of Stress Level vs Sleep Disorder")
-            st.pyplot(plot3())
-            st.markdown("<hr>", unsafe_allow_html=True)  
-            st.write("The heatmap illustrates the relationship between stress levels and sleep disorders. The data suggests that individuals with high stress levels are more likely to have sleep disorders. The most common sleep disorder among high-stress individuals is insomnia, followed by sleep apnea and restless leg syndrome. In contrast, low-stress individuals are less likely to have sleep disorders, with insomnia being the most common sleep disorder. This heatmap provides insights into the relationship between stress levels and sleep disorders.") 
       
-        elif selected_titles == "Relationship between Gender, Occupation, and Sleep Duration":
-            st.write("Relationship between Gender, Occupation, and Sleep Duration")
+    if selected_titles == "Relationship between Gender, Occupation, and Sleep Duration":
+        st.write("Relationship between Gender, Occupation, and Sleep Duration")
         selected_jobs = st.multiselect("Select the occupations to compare", df['Occupation'].unique(), default=['Accountant'])
 
         # Checkbox for view all data
