@@ -1,32 +1,60 @@
-import matplotlib.pyplot as plt
-import seaborn as sns
 import pandas as pd
-def plot12():
-    # Read the CSV file
-    my_data = pd.read_csv("health.csv")
+import plotly.express as px
+import plotly.io as pio
 
-    # Group by Quality of Sleep and calculate count and percentage
-    my_data_summary = my_data.groupby('Quality of Sleep').size().reset_index(name='count')
+def plot12(color_option="Blues"):
+  """
+  Plots an interactive pie chart showing the relationship between sleep quality and heart rate.
 
-    my_data_summary['percentage'] = round((my_data_summary['count'] / my_data_summary['count'].sum()) * 100, 1)
+  Args:
+      color_option (str, optional): Defines the color scheme for the pie chart. 
+          Options include "Blues" (default), "Custom", or a valid Plotly color palette name.
 
+  Returns:
+      plotly.graph_objects.Figure: The generated pie chart figure.
+  """
 
-    # Define colors for the plot
-    darker_blues = ["lightblue", "#6baed6",  "#4292c6",  "#2171b5", "#08519c", "#08306b"]
+  # Read the CSV file
+  my_data = pd.read_csv("health.csv")
 
-    # Calculate number of unique categories for the column "Quality of Sleep"
-    num_categories = len(my_data_summary['Quality of Sleep'].unique())
-    darker_blues = darker_blues[:num_categories]
+  # Group by 'Quality of Sleep' and calculate count and percentage
+  my_data_summary = my_data.groupby('Quality of Sleep').size().reset_index(name='count')
+  my_data_summary['percentage'] = round((my_data_summary['count'] / my_data_summary['count'].sum()) * 100, 1)
 
-    # Create the pie chart
-    plt.figure(figsize=(10, 6))
-    patches, texts, autotexts = plt.pie(my_data_summary['count'], colors=darker_blues, autopct='%1.1f%%', wedgeprops={'linewidth': 1.5, 'edgecolor':'white'})
-    plt.title('Relationship Between Sleep Quality and Heart Rate Among Surveyed Individuals')
+  # Define colors based on the chosen option
+  if color_option == "Blues":
+      darker_blues = px.colors.sequential.Blues[:len(my_data_summary['Quality of Sleep'].unique())]
+  elif color_option == "Custom":
+      # Define a list of distinct colors (replace with your preferred colors)
+      custom_colors = ['royalblue', 'coral', 'limegreen', 'goldenrod', 'magenta']
+      darker_blues = custom_colors
+  else:
+      # Import colors from Plotly.colors (assuming a valid palette name is provided)
+      from plotly.colors import qualitative
+      darker_blues = qualitative.__dict__[color_option][:len(my_data_summary['Quality of Sleep'].unique())]
 
+  # Create the interactive pie chart with px.pie
+  fig = px.pie(
+      my_data_summary,
+      values='count',
+      names='Quality of Sleep',
+      color_discrete_sequence=darker_blues,
+      title='Relationship Between Sleep Quality and Heart Rate Among Surveyed Individuals',
+      labels={'count': 'Count', 'Quality of Sleep': 'Sleep Quality'},  # Customize labels (optional)
+      hole=0.4,  # Create a donut-like pie chart (optional)
+  )
 
-    # print(my_data_summary['Quality Of Sleep'])
-    # Add legend
-    labels = ['{}'.format(i) for i in my_data_summary['Quality of Sleep']]
-    plt.legend(patches, labels, title="Quality of Sleep", loc="upper right", bbox_to_anchor=(1, 0, 0.2, 1))
+  # Update layout for aesthetics (optional)
+  fig.update_layout(legend=dict(x=1, y=1, xanchor="right", yanchor="top"))  # Places legend at top right corner anchored to top-right corner
 
-    return plt.gcf()
+  # Save the figure as a PNG image (optional)
+  # pio.write_image(fig, 'figure.png')
+
+  return fig
+
+# Example usage with different color options
+fig1 = plot12(color_option="Blues")  # Use default Blues color scheme
+fig2 = plot12(color_option="Custom")  # Use custom color list
+fig3 = plot12(color_option="Pastel")  # Use Plotly's Pastel qualitative palette (assuming "Pastel" is a valid palette name)
+
+# You can further customize the code to display or save the desired figure
