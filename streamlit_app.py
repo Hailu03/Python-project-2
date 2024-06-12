@@ -423,10 +423,6 @@ def datasetPage():
             st.error("File 'health.csv' not found.")
 
 def graph():
-<<<<<<< HEAD
-    
-    theme = get_img_as_base64('imgs/themaboutus.jpg')
-=======
     st.title("Graph")
     st.write("Welcome to our webpage showcasing a series of plots alongside their concise explanations, providing insightful interpretations of our data.")
     theme = get_img_as_base64('imgs/themaboutus.jpg')
@@ -467,7 +463,6 @@ def graph():
     </style>
     """,
     unsafe_allow_html=True)
->>>>>>> f014c1ff6ebc295f2847799460159c9e49adfe47
 
     page_bg_img1 = f"""
     <style>
@@ -524,20 +519,26 @@ def graph():
             st.pyplot(plot3())
             st.markdown("<hr>", unsafe_allow_html=True)  
             st.write("The heatmap illustrates the relationship between stress levels and sleep disorders. The data suggests that individuals with high stress levels are more likely to have sleep disorders. The most common sleep disorder among high-stress individuals is insomnia, followed by sleep apnea and restless leg syndrome. In contrast, low-stress individuals are less likely to have sleep disorders, with insomnia being the most common sleep disorder. This heatmap provides insights into the relationship between stress levels and sleep disorders.") 
-      
+           
+                    
+                
         elif selected_titles == "Relationship between Gender, Occupation, and Sleep Duration":
             st.write("Relationship between Gender, Occupation, and Sleep Duration")
-        selected_jobs = st.multiselect("Select the occupations to compare", df['Occupation'].unique(), default=['Accountant'])
 
-        # Checkbox for view all data
-        view_all = st.checkbox("View all Profession", False)
-        if view_all:
-            selected_jobs = df['Occupation'].unique()
+        with st.sidebar:
+            st.header("You can select Occupation here")
+            occupation_unique = df['Occupation'].unique()
+            select_all_occupations = st.checkbox("Select All Occupations", value=False)
+            if select_all_occupations:
+                occupation_filter = st.multiselect("Occupation", options=occupation_unique, default=['Accountant'])  # Select all by default
+            else:
+                occupation_filter = st.multiselect("Occupation", options=occupation_unique)
 
-        st.plotly_chart(plot1(selected_jobs))
+        st.plotly_chart(plot1(occupation_filter))
         st.markdown("<hr>", unsafe_allow_html=True)
         st.write("The plot illustrates the average sleep duration across different genders and occupations. Females tend to sleep slightly longer than males, with healthcare professionals having the highest average sleep durations. On average, females sleep between 7.2 to 8.5 hours, while males sleep between 5.8 to 7.4 hours. Healthcare professionals average around 7.5 hours of sleep, followed by educators and IT professionals. Interestingly, there's some variation within occupations based on gender, though less pronounced among IT professionals.")
-                
+       
+               
     
     elif selected_option == "BMI": 
     
