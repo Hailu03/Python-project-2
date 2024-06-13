@@ -794,14 +794,10 @@ def plot13():
             st.markdown("<hr>", unsafe_allow_html=True)
             st.write("The plot shows the relationship between BMI category and heart rate. The data suggests that individuals in the obese category have the highest heart rate, followed by the overweight category. The normal weight and normal categories have similar heart rates. This bar chart provides insights into the relationship between BMI category and heart rate.")
             code_text = """
-import seaborn as sns
-import matplotlib.pyplot as plt
+import plotly.express as px
 import pandas as pd
-import mplcursors
-from matplotlib.patches import Patch
 
 def plot6():
-    # Assuming my_data is a DataFrame containing your data
     # Read the CSV file
     my_data = pd.read_csv("health.csv")
 
@@ -811,29 +807,13 @@ def plot6():
     # Define custom colors for BMI categories
     bmi_colors = {"Normal": "#FF9999", "Normal Weight": "#FF9966", "Overweight": "#FF6600", "Obese": "#CC99FF"}
 
-    # Create the boxplot
-    plt.figure(figsize=(10, 6))
-    box_plot = sns.boxplot(data=my_data, x="BMI Category", y="Heart Rate", palette=bmi_colors)
+    # Create the boxplot using Plotly Express
+    fig = px.box(my_data, x="BMI Category", y="Heart Rate", color="BMI Category", color_discrete_map=bmi_colors)
 
-    # Set title and axis labels
-    plt.title("Heart Rate by BMI Category")
-    plt.xlabel("BMI Category")
-    plt.ylabel("Heart Rate")
+    # Update figure layout
+    fig.update_layout(title="Heart Rate by BMI Category", xaxis_title="BMI Category", yaxis_title="Heart Rate")
 
-    # Create legend
-    legend_elements = [Patch(facecolor=bmi_colors[key], label=key) for key in bmi_colors.keys()]
-    plt.legend(handles=legend_elements, title="BMI Categories")
-
-    # Add interactivity
-    cursor = mplcursors.cursor(box_plot.get_lines(), hover=True)
-    cursor.connect("add", lambda sel: sel.annotation.set_text(
-        'Heart Rate: {}'.format(sel.target[1])
-    ))
-
-    # Display the plot
-    plt.show()
-
-    return plt.gcf()
+    return fig
 
 
 
