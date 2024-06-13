@@ -1,9 +1,7 @@
-import seaborn as sns
-import matplotlib.pyplot as plt
+import plotly.express as px
 import pandas as pd
 
 def plot6():
-    # Assuming my_data is a DataFrame containing your data
     # Read the CSV file
     my_data = pd.read_csv("health.csv")
 
@@ -13,16 +11,10 @@ def plot6():
     # Define custom colors for BMI categories
     bmi_colors = {"Normal": "#FF9999", "Normal Weight": "#FF9966", "Overweight": "#FF6600", "Obese": "#CC99FF"}
 
-    # Create the boxplot
-    plt.figure(figsize=(10, 6))
-    sns.boxplot(data=my_data, x="BMI Category", y="Heart Rate", palette=bmi_colors)
+    # Create the boxplot using Plotly Express
+    fig = px.box(my_data, x="BMI Category", y="Heart Rate", color="BMI Category", color_discrete_map=bmi_colors)
 
-    # Set title and axis labels
-    plt.title("Heart Rate by BMI Category")
-    plt.xlabel("BMI Category")
-    plt.ylabel("Heart Rate")
+    # Update figure layout
+    fig.update_layout(title="Heart Rate by BMI Category", xaxis_title="BMI Category", yaxis_title="Heart Rate")
 
-    # Remove legend
-    plt.legend().remove()
-
-    return plt.gcf()
+    return fig
