@@ -421,6 +421,7 @@ def datasetPage():
         except FileNotFoundError:
             st.error("File 'health.csv' not found.")
 
+
 def graph():
     
     theme = get_img_as_base64('imgs/themaboutus.jpg')
@@ -485,18 +486,30 @@ def graph():
     
     st.title("Plot Explaination")
     st.write("For the purpose of enhanced accessibility, we leverage charts on this page to represent our data about people's condition according to their occupation. This approach enables users to efficiently identify and grasp the information most relevant to their needs. .")    
-    options = ["Sleep Duration", "Sleep Quality", "Daily Steps"]
+    options = ["Sleep Duration", "Sleep Quality and BMI", "Daily Steps"]
     selected_option = st.radio("You can select your favorite category here ", options, horizontal=True)
     
     
     if selected_option == "Sleep Duration":
         graph_titles = [
+            
         "Relationship between Gender, Occupation, and Sleep Duration",
-        "Heatmap of Stress Level vs Sleep Disorder"] 
+        "Heatmap of Stress Level vs Sleep Disorder",
+        "Density of Sleep Duration by Gender and Stress Level",
+        "Select All"] 
         selected_titles = st.selectbox("Select the graph to display", graph_titles, index=0, format_func=lambda x: x)
-
-    # Plot the selected graph
-        if selected_titles == "Heatmap of Stress Level vs Sleep Disorder":
+     
+        if selected_titles == "Select All":
+    # Display all plots in a grid layout
+            
+            st.plotly_chart(plot1(df['Occupation'].unique()))
+            st.plotly_chart(plot2_interactive())
+            st.plotly_chart(plot3())
+    
+    
+        
+        
+        elif selected_titles == "Heatmap of Stress Level vs Sleep Disorder":
             st.write("Heatmap of Stress Level vs Sleep Disorder")
             st.plotly_chart(plot3())
             st.markdown("<hr>", unsafe_allow_html=True)  
@@ -534,25 +547,75 @@ def plot3():
 # Create the expander and set it to be initially collapsed
             with st.expander("Click here to reveal the code for this plot", expanded=False):
                 st.code(code_text, language="python")
+        
+
+        
+        elif selected_titles == "Density of Sleep Duration by Gender and Stress Level":
+            st.write("Density of Sleep Duration by Gender and Stress Level")
+            st.plotly_chart(plot2_interactive())
+            st.markdown("<hr>", unsafe_allow_html=True)
+            st.write("The graphics show gender distribution, sleep duration variances, and stress level impacts on sleep. Sleep analysis by gender indicates females average 7 hours of sleep, slightly more than males at 6.5 hours. High-stress individuals sleep 5.5 hours, significantly less than low-stress counterparts averaging 7.5 hours. Further examination reveals high-stress individuals, regardless of gender, sleep about 30 minutes less than low-stress individuals. High-stress females sleep roughly 6.8 hours, while high-stress males sleep approximately 6.5 hours, highlighting stress as a key factor in sleep deprivation.")
+            code_text = """
+import pandas as pd
+import plotly.express as px
+
+def plot2():
+    # Read the CSV file
+    my_data = pd.read_csv("health.csv")
+
+    # Create interactive scatter plot with density contours
+    fig = px.density_contour(
+        my_data,
+        x="Sleep Duration",
+        y="Stress Level",
+        color="Gender",
+        facet_col="Stress Level",
+        facet_col_wrap=3,
+        histfunc="kde",
+        fill_color="auto",
+        alpha=0.5,
+        marginal_x="histogram",
+        marginal_y="histogram",
+        title="Density of Sleep Duration by Gender and Stress Level"
+    )
+
+    # Update layout for better interactivity
+    fig.update_layout(
+        showlegend=True,  # Display legend
+        hovermode="closest",  # Show hover information on hover
+    )
+
+    return fig
+
+
+
+
+"""
+
+# Create the expander and set it to be initially collapsed
+            with st.expander("Click here to reveal the code for this plot", expanded=False):
+                st.code(code_text, language="python")     
+      
+                
 
 
         elif selected_titles == "Relationship between Gender, Occupation, and Sleep Duration":
             st.write("Relationship between Gender, Occupation, and Sleep Duration")
 
-        with st.sidebar:
-            st.header("You can select Occupation here")
-            occupation_unique = df['Occupation'].unique()
-            select_all_occupations = st.checkbox("Select All Occupations", value=False)
-            if select_all_occupations:
-                occupation_filter = st.multiselect("Occupation", options=occupation_unique, default=occupation_unique)  # Select all by default
-            else:
-                occupation_filter = st.multiselect("Occupation", options=occupation_unique)
+            with st.sidebar:
+                st.header("You can select Occupation here")
+                occupation_unique = df['Occupation'].unique()
+                select_all_occupations = st.checkbox("Select All Occupations", value=False)
+                if select_all_occupations:
+                    occupation_filter = st.multiselect("Occupation", options=occupation_unique, default=occupation_unique)  # Select all by default
+                else:
+                    occupation_filter = st.multiselect("Occupation", options=occupation_unique)
 
-        st.plotly_chart(plot1(occupation_filter))
-        st.markdown("<hr>", unsafe_allow_html=True)
-        st.write("The plot illustrates the average sleep duration across different genders and occupations. Females tend to sleep slightly longer than males, with healthcare professionals having the highest average sleep durations. On average, females sleep between 7.2 to 8.5 hours, while males sleep between 5.8 to 7.4 hours. Healthcare professionals average around 7.5 hours of sleep, followed by educators and IT professionals. Interestingly, there's some variation within occupations based on gender, though less pronounced among IT professionals.")        
+            st.plotly_chart(plot1(occupation_filter))
+            st.markdown("<hr>", unsafe_allow_html=True)
+            st.write("The plot illustrates the average sleep duration across different genders and occupations. Females tend to sleep slightly longer than males, with healthcare professionals having the highest average sleep durations. On average, females sleep between 7.2 to 8.5 hours, while males sleep between 5.8 to 7.4 hours. Healthcare professionals average around 7.5 hours of sleep, followed by educators and IT professionals. Interestingly, there's some variation within occupations based on gender, though less pronounced among IT professionals.")        
         # Define the code to be displayed
-        code_text = """
+            code_text = """
 import plotly.express as px
 import pandas as pd
 
@@ -598,23 +661,36 @@ def plot1(jobs):
 """
 
 # Create the expander and set it to be initially collapsed
-        with st.expander("Click here to reveal the code for this plot", expanded=False):
-            st.code(code_text, language="python")
-               
+            with st.expander("Click here to reveal the code for this plot", expanded=False):
+                    st.code(code_text, language="python")
+                    
+                    
+             
+                
+                
+       
+                   
     
-    elif selected_option == "Sleep Quality": 
+    elif selected_option == "Sleep Quality and BMI": 
     
         Graph_BMI = [
+      "Heart Rate by BMI Category",
       "Relationship Between Sleep Quality and Heart Rate Among Surveyed Individuals",
-      "Distribution of Quality of Sleep",
+      "Distribution of Quality of Sleep","Select All"
+      
       ]   
      
-     
+
       
         selected_titles = st.selectbox("Select the graph to display", Graph_BMI, index=0, format_func=lambda x: x)
                
-     
-        if selected_titles == "Relationship Between Sleep Quality and Heart Rate Among Surveyed Individuals":
+        if selected_titles == "Select All":
+            st.plotly_chart(plot6())
+            st.plotly_chart(plot12())
+            st.plotly_chart(plot13())
+            
+            
+        elif selected_titles == "Relationship Between Sleep Quality and Heart Rate Among Surveyed Individuals":
             st.write("Relationship Between Sleep Quality and Heart Rate Among Surveyed Individuals")
             st.plotly_chart(plot12())
             st.markdown("<hr>", unsafe_allow_html=True)
@@ -710,16 +786,79 @@ def plot13():
 # Create the expander and set it to be initially collapsed
             with st.expander("Click here to reveal the code for this plot", expanded=False):
                 st.code(code_text, language="python")
+        
+        
+        elif selected_titles == "Heart Rate by BMI Category":
+            st.write("Heart Rate by BMI Category")
+            st.plotly_chart(plot6())
+            st.markdown("<hr>", unsafe_allow_html=True)
+            st.write("The plot shows the relationship between BMI category and heart rate. The data suggests that individuals in the obese category have the highest heart rate, followed by the overweight category. The normal weight and normal categories have similar heart rates. This bar chart provides insights into the relationship between BMI category and heart rate.")
+            code_text = """
+import seaborn as sns
+import matplotlib.pyplot as plt
+import pandas as pd
+import mplcursors
+from matplotlib.patches import Patch
+
+def plot6():
+    # Assuming my_data is a DataFrame containing your data
+    # Read the CSV file
+    my_data = pd.read_csv("health.csv")
+
+    # Convert BMI.Category to categorical with specified levels
+    my_data["BMI Category"] = pd.Categorical(my_data["BMI Category"], categories=["Normal", "Normal Weight", "Overweight", "Obese"], ordered=True)
+
+    # Define custom colors for BMI categories
+    bmi_colors = {"Normal": "#FF9999", "Normal Weight": "#FF9966", "Overweight": "#FF6600", "Obese": "#CC99FF"}
+
+    # Create the boxplot
+    plt.figure(figsize=(10, 6))
+    box_plot = sns.boxplot(data=my_data, x="BMI Category", y="Heart Rate", palette=bmi_colors)
+
+    # Set title and axis labels
+    plt.title("Heart Rate by BMI Category")
+    plt.xlabel("BMI Category")
+    plt.ylabel("Heart Rate")
+
+    # Create legend
+    legend_elements = [Patch(facecolor=bmi_colors[key], label=key) for key in bmi_colors.keys()]
+    plt.legend(handles=legend_elements, title="BMI Categories")
+
+    # Add interactivity
+    cursor = mplcursors.cursor(box_plot.get_lines(), hover=True)
+    cursor.connect("add", lambda sel: sel.annotation.set_text(
+        'Heart Rate: {}'.format(sel.target[1])
+    ))
+
+    # Display the plot
+    plt.show()
+
+    return plt.gcf()
+
+
+
+
+"""
+
+# Create the expander and set it to be initially collapsed
+            with st.expander("Click here to reveal the code for this plot", expanded=False):
+                st.code(code_text, language="python")
+        
             
     elif selected_option == "Daily Steps":
         Graph_stress = [
         "Daily Steps: Trends by Age and Gender",
-        "Daily Steps Distribution by Gender: A Look at the Violin Plot"
+        "Daily Steps Distribution by Gender: A Look at the Violin Plot","Select All"
       ]
       
         selected_titles = st.selectbox("Select the graph to display", Graph_stress, index=0, format_func=lambda x: x)
-      
-        if selected_titles == "Daily Steps: Trends by Age and Gender":
+        if selected_titles == "Select All":
+    
+            st.plotly_chart(plot8())
+            st.plotly_chart(plot9())
+            
+            
+        elif selected_titles == "Daily Steps: Trends by Age and Gender":
             st.write("Daily Steps: Trends by Age and Gender")
             st.plotly_chart(plot8())
             st.markdown("<hr>", unsafe_allow_html=True)
@@ -794,64 +933,6 @@ def plot9(data_path="health.csv"):
 # Create the expander and set it to be initially collapsed
             with st.expander("Click here to reveal the code for this plot", expanded=False):
                 st.code(code_text, language="python")
-
-        st.write("The plot illustrates the average sleep duration across different genders and occupations. Females tend to sleep slightly longer than males, with healthcare professionals having the highest average sleep durations. On average, females sleep between 7.2 to 8.5 hours, while males sleep between 5.8 to 7.4 hours. Healthcare professionals average around 7.5 hours of sleep, followed by educators and IT professionals. Interestingly, there's some variation within occupations based on gender, though less pronounced among IT professionals.")
-        st.code(open("app.py").read(), language='python')
-    elif selected_titles == "Density of Sleep Duration by Gender and Stress Level":
-        st.write("Density of Sleep Duration by Gender and Stress Level")
-        st.pyplot(plot2())
-        st.write("The graphics show gender distribution, sleep duration variances, and stress level impacts on sleep. Sleep analysis by gender indicates females average 7 hours of sleep, slightly more than males at 6.5 hours. High-stress individuals sleep 5.5 hours, significantly less than low-stress counterparts averaging 7.5 hours. Further examination reveals high-stress individuals, regardless of gender, sleep about 30 minutes less than low-stress individuals. High-stress females sleep roughly 6.8 hours, while high-stress males sleep approximately 6.5 hours, highlighting stress as a key factor in sleep deprivation.")
-        st.code(open("app2.py").read(), language='python')
-    elif selected_titles == "Heatmap of Stress Level vs Sleep Disorder":
-        st.write("Heatmap of Stress Level vs Sleep Disorder")
-        st.pyplot(plot3())
-        st.write("The heatmap illustrates the relationship between stress levels and sleep disorders. The data suggests that individuals with high stress levels are more likely to have sleep disorders. The most common sleep disorder among high-stress individuals is insomnia, followed by sleep apnea and restless leg syndrome. In contrast, low-stress individuals are less likely to have sleep disorders, with insomnia being the most common sleep disorder. This heatmap provides insights into the relationship between stress levels and sleep disorders.")
-        st.code(open("app3.py").read(), language='python')
-    elif selected_titles == "Count of Gender across Physical Activity Levels":
-        st.write("Count of Gender across Physical Activity Levels")
-        st.pyplot(plot4())
-        st.write("This chart examines the relationship between physical activity level and heart rate, separating the data by gender. The graph illustrates that both genders have similar physical activity levels. When this level is below 60, females’ level is two points lower than males. The opposite is true when the level is above 60 when the physical activity level of women is one point higher than men. ")
-        st.code(open("app4.py").read(), language='python')
-    elif selected_titles == "Distribution of BMI by Gender":
-        st.write("Distribution of BMI by Gender")
-        st.pyplot(plot5())
-        st.write("The bar chart presents data about the distribution of participants categorized by BMI. According to the graph, females outweigh males in the Normal Weight and Overweight categories. In contrast, the Normal category shows that men account for 131 people which is double compared to women. Finally, the Obese people also illustrate the same trend where there is only one female is obese, nine times lower than males")
-        st.code(open("app5.py").read(), language='python')
-    elif selected_titles == "Heart Rate by BMI Category":
-        st.write("Heart Rate by BMI Category")
-        st.pyplot(plot6())
-        st.write("The plot shows the relationship between BMI category and heart rate. The data suggests that individuals in the obese category have the highest heart rate, followed by the overweight category. The normal weight and normal categories have similar heart rates. This bar chart provides insights into the relationship between BMI category and heart rate.")
-        st.code(open("app7.py").read(), language='python')
-    elif selected_titles == "Daily Steps: Trends by Age and Gender":
-        st.write(("Daily Steps: Trends by Age and Gender"))
-        st.pyplot(plot8())
-        st.write("The plot depicts the relationship between daily steps, age, and gender. It likely stems from a health or fitness study that tracked daily steps taken by participants of different ages and genders. The data is visualized using two elements. The first element is colored lines which separate trend lines are shown for each gender, colored light blue possibly for males and salmon possibly for females. The second element is data points.")
-        st.code(open("app8.py").read(), language='python')
-    elif selected_titles == "Daily Steps Distribution by Gender: A Look at the Violin Plot":
-        st.write("Daily Steps Distribution by Gender: A Look at the Violin Plot")
-        st.pyplot(plot9())
-        st.write("This violin plot, generated using ggplot2 in R, provides insights into the distribution of daily steps taken by individuals categorized by gender in the provided dataset. First, the distribution of the violin plots suggests a possible difference in the distribution of daily steps between genders. While the medians might be visually similar, the shapes of the violins hint at potential variations. Second, the spread of wider spread of the female violin might indicate greater variability in daily steps among females compared to males. ")
-        st.code(open("app9.py").read(), language='python')
-    elif selected_titles == ("Stress Level by Occupation and Age"):
-        st.write(("Stress Level by Occupation and Age"))
-        st.pyplot(plot10())
-        st.write("Bubble charts show individuals' stress levels based on occupation and personality. The size of the bubbles indicates stress levels, while their color reflects gender. Overall, it is possible to see fluctuations in stress levels between men and women in different occupational groups. It shows that the group of people working as teachers, software engineers, lawyers, engineers, and doctors have a closer viewing distance and a wider bending angle than the other group, showing that the job requires more precision, requiring looked closer and bent more than less precise work, which caused more nervous tension and pain in the other groups.")
-        st.code(open("app10.py").read(), language='python')
-    elif selected_titles == ("Distribution of Stress Levels by Age Group"):
-        st.write(("Distribution of Stress Levels by Age Group"))
-        st.pyplot(plot11())
-        st.write("The plot shows the distribution of stress levels by age group. The data suggests that individuals in the 20-29 age group have the highest stress levels, followed by the 30-39 age group. The 40-49 age group has the lowest stress levels. This bar chart provides insights into the distribution of stress levels by age group.")
-        st.code(open("app11.py").read(), language='python')
-    elif selected_titles == ("Relationship Between Sleep Quality and Heart Rate Among Surveyed Individuals"):
-        st.write(("Relationship Between Sleep Quality and Heart Rate Among Surveyed Individuals"))
-        st.pyplot(plot12())
-        st.write("The pie chart shows the relationship between sleep quality and heart rate among surveyed individuals. The data suggests that individuals with poor sleep quality have higher heart rates than those with good sleep quality. The pie chart provides insights into the relationship between sleep quality and heart rate.")
-        st.code(open("app12.py").read(), language='python')
-    elif selected_titles == ("Distribution of Quality of Sleep"):
-        st.write(("Distribution of Quality of Sleep"))
-        st.pyplot(plot13())
-        st.write("The chart shows the distribution of quality of sleep among surveyed individuals. The data suggests that most individuals have good quality sleep, followed by fair quality sleep. The pie chart provides insights into the distribution of quality of sleep.")
-        st.code(open("app13.py").read(), language='python')
 
 def About():
     mem1 = get_img_as_base64('imgs/member1.jpg')
