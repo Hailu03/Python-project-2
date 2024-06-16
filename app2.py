@@ -28,8 +28,4 @@ def plot2_interactive():
         hovermode="closest",  # Show hover information on hover
     )
 
-<<<<<<< HEAD
     return fig
-=======
-    return fig
->>>>>>> 9ee5d1ed58c96ab3fdf4dd1dbf7c9a25a83e711d
