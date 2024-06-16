@@ -1,14 +1,31 @@
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-def plot2():
+import plotly.express as px
+
+def plot2_interactive():
     # Read the CSV file
     my_data = pd.read_csv("health.csv")
-    # Density of Sleep Duration by Gender and Stress Level
-    g = sns.FacetGrid(my_data, col="Stress Level", col_wrap=3, height=4)
-    g.map_dataframe(sns.kdeplot, x="Sleep Duration", hue='Gender', fill=True, alpha=0.5, palette=['green', 'orange'])
-    g.set_xlabels("Sleep Duration")
-    g.set_ylabels("Density")
-    g.fig.suptitle("Density of Sleep Duration by Gender and Stress Level")
-    plt.subplots_adjust(top=0.85)
-    return plt.gcf()
+
+    # Create interactive scatter plot with density contours (adjusted)
+    fig = px.density_contour(
+        my_data,
+        x="Sleep Duration",
+        y="Stress Level",
+        color="Gender",  # Use 'Gender' column for color mapping
+        facet_col="Stress Level",
+        facet_col_wrap=3,
+        # Optional color customization
+        color_discrete_sequence=["blue", "red"],  # Set colors for genders
+
+        # Remove any irrelevant arguments (optional)
+        # marginal_x="histogram",  # Not applicable for density contours
+        # marginal_y="histogram",  # Not applicable for density contours
+        title="Density of Sleep Duration by Gender and Stress Level"
+    )
+
+    # Update layout for better interactivity
+    fig.update_layout(
+        showlegend=True,  # Display legend
+        hovermode="closest",  # Show hover information on hover
+    )
+
+    return fig

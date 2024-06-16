@@ -1,24 +1,35 @@
-import matplotlib.pyplot as plt
-import seaborn as sns
+import plotly.express as px
 import pandas as pd
 
-def plot9():
+def plot9(data_path="health.csv"):
+  """
+  Reads CSV data, creates an interactive violin plot with distinct colors for genders, and displays it on Streamlit.
 
-    # Read the CSV file
-    my_data = pd.read_csv("health.csv")
+  Args:
+      data_path (str, optional): Path to the CSV file containing the data. Defaults to "health.csv".
+  """
 
-    # Replace spaces in column names with underscores
-    my_data.columns = my_data.columns.str.replace(' ', '_')
+  # Read the CSV file with error handling
+  my_data = pd.read_csv(data_path)
 
-    # Create a scatter plot with seaborn
-    plt.figure(figsize=(10, 6))
-    scatter = sns.scatterplot(data=my_data, x='Age', y='Occupation', size='Stress_Level', hue='Gender', 
-    sizes=(30, 300), alpha=0.25, palette=["darkblue", "darkred"])
+  # Replace spaces in column names with underscores
+  my_data.columns = my_data.columns.str.replace(' ', '_')
 
-    plt.title("Stress Level by Occupation and Age")
-    plt.xlabel("Age")
-    plt.ylabel("Occupation")
-    scatter.legend(loc='center right', bbox_to_anchor=(1.25, 0.5), ncol=1)
-    plt.grid(color='gray', linestyle='-', linewidth=0.5, alpha=0.7)
-    
-    return plt.gcf()
+  # Define a color dictionary for distinct colors
+  color_map = {"Female": "lightblue", "Male": "coral"}
+
+  # Create an interactive violin plot with distinct colors
+  fig = px.violin(
+      my_data,
+      x="Gender",
+      y="Daily_Steps",
+      color="Gender",  # Use 'Gender' for coloring
+      color_discrete_sequence=list(color_map.values()),  # Set distinct colors
+      box=True,
+      title="Daily Steps Distribution by Gender: An Interactive Plot",
+  )
+
+  return fig
+
+
+
