@@ -17,8 +17,4 @@ def plot6():
     # Update figure layout
     fig.update_layout(title="Heart Rate by BMI Category", xaxis_title="BMI Category", yaxis_title="Heart Rate")
 
-<<<<<<< HEAD
     return fig
-=======
-    return fig
->>>>>>> 9ee5d1ed58c96ab3fdf4dd1dbf7c9a25a83e711d
