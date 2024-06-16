@@ -476,12 +476,19 @@ def graph():
     
     if selected_option == "Sleep Duration":
         graph_titles = [
+<<<<<<< HEAD
         "Heatmap of Stress Level vs Sleep Disorder",    
         "Relationship between Gender, Occupation, and Sleep Duration",
+=======
+            
+        "Relationship between Gender, Occupation, and Sleep Duration",
+        "Heatmap of Stress Level vs Sleep Disorder",
+>>>>>>> 9ee5d1ed58c96ab3fdf4dd1dbf7c9a25a83e711d
         "Density of Sleep Duration by Gender and Stress Level",
         "Select All"] 
         selected_titles = st.selectbox("Select the graph to display", graph_titles, index=0, format_func=lambda x: x)
      
+<<<<<<< HEAD
         # Corrected indentation and structure for better readability and functionality
         if selected_titles == "Select All":
             # Display all plots in a grid layout
@@ -489,6 +496,18 @@ def graph():
             st.plotly_chart(plot2_interactive())
             st.plotly_chart(plot1(df['Occupation'].unique()))
 
+=======
+        if selected_titles == "Select All":
+    # Display all plots in a grid layout
+            
+            st.plotly_chart(plot1(df['Occupation'].unique()))
+            st.plotly_chart(plot2_interactive())
+            st.plotly_chart(plot3())
+    
+    
+        
+        
+>>>>>>> 9ee5d1ed58c96ab3fdf4dd1dbf7c9a25a83e711d
         elif selected_titles == "Heatmap of Stress Level vs Sleep Disorder":
             st.write("Heatmap of Stress Level vs Sleep Disorder")
             st.plotly_chart(plot3())
@@ -565,8 +584,64 @@ def graph():
 
 # Create the expander and set it to be initially collapsed
             with st.expander("Click here to reveal the code for this plot", expanded=False):
+<<<<<<< HEAD
                 st.code(code_text, language="python")     
                 
+=======
+                st.code(code_text, language="python")
+        
+
+        
+        elif selected_titles == "Density of Sleep Duration by Gender and Stress Level":
+            st.write("Density of Sleep Duration by Gender and Stress Level")
+            st.plotly_chart(plot2_interactive())
+            st.markdown("<hr>", unsafe_allow_html=True)
+            st.write("The graphics show gender distribution, sleep duration variances, and stress level impacts on sleep. Sleep analysis by gender indicates females average 7 hours of sleep, slightly more than males at 6.5 hours. High-stress individuals sleep 5.5 hours, significantly less than low-stress counterparts averaging 7.5 hours. Further examination reveals high-stress individuals, regardless of gender, sleep about 30 minutes less than low-stress individuals. High-stress females sleep roughly 6.8 hours, while high-stress males sleep approximately 6.5 hours, highlighting stress as a key factor in sleep deprivation.")
+            code_text = """
+import pandas as pd
+import plotly.express as px
+
+def plot2():
+    # Read the CSV file
+    my_data = pd.read_csv("health.csv")
+
+    # Create interactive scatter plot with density contours
+    fig = px.density_contour(
+        my_data,
+        x="Sleep Duration",
+        y="Stress Level",
+        color="Gender",
+        facet_col="Stress Level",
+        facet_col_wrap=3,
+        histfunc="kde",
+        fill_color="auto",
+        alpha=0.5,
+        marginal_x="histogram",
+        marginal_y="histogram",
+        title="Density of Sleep Duration by Gender and Stress Level"
+    )
+
+    # Update layout for better interactivity
+    fig.update_layout(
+        showlegend=True,  # Display legend
+        hovermode="closest",  # Show hover information on hover
+    )
+
+    return fig
+
+
+
+
+"""
+
+# Create the expander and set it to be initially collapsed
+            with st.expander("Click here to reveal the code for this plot", expanded=False):
+                st.code(code_text, language="python")     
+      
+                
+
+
+>>>>>>> 9ee5d1ed58c96ab3fdf4dd1dbf7c9a25a83e711d
         elif selected_titles == "Relationship between Gender, Occupation, and Sleep Duration":
             st.write("Relationship between Gender, Occupation, and Sleep Duration")
 
@@ -776,6 +851,13 @@ def plot6():
     fig.update_layout(title="Heart Rate by BMI Category", xaxis_title="BMI Category", yaxis_title="Heart Rate")
 
     return fig
+<<<<<<< HEAD
+=======
+
+
+
+
+>>>>>>> 9ee5d1ed58c96ab3fdf4dd1dbf7c9a25a83e711d
 """
 
 # Create the expander and set it to be initially collapsed
