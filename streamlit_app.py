@@ -484,7 +484,7 @@ def graph():
      
         if selected_titles == "Select All":
     # Display all plots in a grid layout
-            st.plotly_chart(plot3())
+            st.plotly_chart(plot3n())
             st.plotly_chart(plot2_interactive())
             st.plotly_chart(plot1(df['Occupation'].unique()))
         
