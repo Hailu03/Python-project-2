@@ -484,13 +484,24 @@ def graph():
      
         if selected_titles == "Select All":
     # Display all plots in a grid layout
-            st.plotly_chart(plot3())
+            st.plotly_chart(plot3n())
             st.plotly_chart(plot2_interactive())
             st.plotly_chart(plot1(df['Occupation'].unique()))
         
         elif selected_titles == "Heatmap of Stress Level vs Sleep Disorder":
+            my_data = pd.read_csv("health.csv", na_values=["None"])
+            min_stress_level, max_stress_level = st.slider(
+                "Select the range of stress levels",
+                min_value=int(my_data["Stress Level"].min()),  # Assuming 'Stress Level' is a column in your dataset
+                max_value=int(my_data["Stress Level"].max()),
+                value=(int(my_data["Stress Level"].min()), int(my_data["Stress Level"].max()))  # Default range
+    )
+    
+    # Filter the dataset based on the selected stress level range
+            filtered_data = my_data[(my_data["Stress Level"] >= min_stress_level) & (my_data["Stress Level"] <= max_stress_level)]
             st.write("Heatmap of Stress Level vs Sleep Disorder")
-            st.plotly_chart(plot3())
+            print("Filtered data shape:", filtered_data.shape)  # Debugging line to see the filtered data size
+            st.plotly_chart(plot3(filtered_data))
             st.markdown("<hr>", unsafe_allow_html=True)  
             st.write("The heatmap illustrates the relationship between stress levels and sleep disorders. The data suggests that individuals with high stress levels are more likely to have sleep disorders. The most common sleep disorder among high-stress individuals is insomnia, followed by sleep apnea and restless leg syndrome. In contrast, low-stress individuals are less likely to have sleep disorders, with insomnia being the most common sleep disorder. This heatmap provides insights into the relationship between stress levels and sleep disorders.") 
             code_text = """
