@@ -468,7 +468,7 @@ def graph():
     st.markdown(page_bg_img1, unsafe_allow_html=True)
 
     
-    st.title("Plot Explaination")
+    st.title("Plot Explanation")
     st.write("For the purpose of enhanced accessibility, we leverage charts on this page to represent our data about people's condition according to their occupation. This approach enables users to efficiently identify and grasp the information most relevant to their needs. .")    
     options = ["Sleep Duration", "Sleep Quality and BMI", "Daily Steps"]
     selected_option = st.radio("You can select your favorite category here ", options, horizontal=True)
