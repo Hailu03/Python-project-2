@@ -501,14 +501,14 @@ def graph():
     
     # Filter the dataset based on the selected stress level range
             filtered_data = my_data[(my_data["Stress Level"] >= min_stress_level) & (my_data["Stress Level"] <= max_stress_level)]
-            st.write("Heatmap of Stress Level vs Sleep Disorder")
-            print("Filtered data shape:", filtered_data.shape)  # Debugging line to see the filtered data size
             col1, col2, col3 = st.columns([1,6,1])  # Adjust the ratio as needed for better centering
             with col2:
+                st.write("Heatmap of Stress Level vs Sleep Disorder")
+           
                 st.plotly_chart(plot3(filtered_data))
-            st.markdown("<hr>", unsafe_allow_html=True)  
-            st.write("The heatmap illustrates the relationship between stress levels and sleep disorders. The data suggests that individuals with high stress levels are more likely to have sleep disorders. The most common sleep disorder among high-stress individuals is insomnia, followed by sleep apnea and restless leg syndrome. In contrast, low-stress individuals are less likely to have sleep disorders, with insomnia being the most common sleep disorder. This heatmap provides insights into the relationship between stress levels and sleep disorders.") 
-            code_text = """
+                st.markdown("<hr>", unsafe_allow_html=True)  
+                st.write("The heatmap illustrates the relationship between stress levels and sleep disorders. The data suggests that individuals with high stress levels are more likely to have sleep disorders. The most common sleep disorder among high-stress individuals is insomnia, followed by sleep apnea and restless leg syndrome. In contrast, low-stress individuals are less likely to have sleep disorders, with insomnia being the most common sleep disorder. This heatmap provides insights into the relationship between stress levels and sleep disorders.") 
+                code_text = """
 import pandas as pd
 import plotly.express as px
 
@@ -541,13 +541,14 @@ def plot3():
 
         
         elif selected_titles == "Density of Sleep Duration by Gender and Stress Level":
-            st.write("Density of Sleep Duration by Gender and Stress Level")
             col1, col2, col3 = st.columns([1,6,1])  # Adjust the ratio as needed for better centering
             with col2:
+                st.write("Density of Sleep Duration by Gender and Stress Level")
+            
                 st.plotly_chart(plot2_interactive())
-            st.markdown("<hr>", unsafe_allow_html=True)
-            st.write("The graphics show gender distribution, sleep duration variances, and stress level impacts on sleep. Sleep analysis by gender indicates females average 7 hours of sleep, slightly more than males at 6.5 hours. High-stress individuals sleep 5.5 hours, significantly less than low-stress counterparts averaging 7.5 hours. Further examination reveals high-stress individuals, regardless of gender, sleep about 30 minutes less than low-stress individuals. High-stress females sleep roughly 6.8 hours, while high-stress males sleep approximately 6.5 hours, highlighting stress as a key factor in sleep deprivation.")
-            code_text = """
+                st.markdown("<hr>", unsafe_allow_html=True)
+                st.write("The graphics show gender distribution, sleep duration variances, and stress level impacts on sleep. Sleep analysis by gender indicates females average 7 hours of sleep, slightly more than males at 6.5 hours. High-stress individuals sleep 5.5 hours, significantly less than low-stress counterparts averaging 7.5 hours. Further examination reveals high-stress individuals, regardless of gender, sleep about 30 minutes less than low-stress individuals. High-stress females sleep roughly 6.8 hours, while high-stress males sleep approximately 6.5 hours, highlighting stress as a key factor in sleep deprivation.")
+                code_text = """
 import pandas as pd
 import plotly.express as px
 def plot2_interactive():
@@ -597,10 +598,10 @@ def plot2_interactive():
             col1, col2, col3 = st.columns([1,6,1])  # Adjust the ratio as needed for better centering
             with col2:
                 st.plotly_chart(plot1(occupation_filter))
-            st.markdown("<hr>", unsafe_allow_html=True)
-            st.write("The plot illustrates the average sleep duration across different genders and occupations. Females tend to sleep slightly longer than males, with healthcare professionals having the highest average sleep durations. On average, females sleep between 7.2 to 8.5 hours, while males sleep between 5.8 to 7.4 hours. Healthcare professionals average around 7.5 hours of sleep, followed by educators and IT professionals. Interestingly, there's some variation within occupations based on gender, though less pronounced among IT professionals.")        
+                st.markdown("<hr>", unsafe_allow_html=True)
+                st.write("The plot illustrates the average sleep duration across different genders and occupations. Females tend to sleep slightly longer than males, with healthcare professionals having the highest average sleep durations. On average, females sleep between 7.2 to 8.5 hours, while males sleep between 5.8 to 7.4 hours. Healthcare professionals average around 7.5 hours of sleep, followed by educators and IT professionals. Interestingly, there's some variation within occupations based on gender, though less pronounced among IT professionals.")        
         # Define the code to be displayed
-            code_text = """
+                code_text = """
 import plotly.express as px
 import pandas as pd
 
@@ -674,9 +675,9 @@ def plot1(jobs):
             col1, col2, col3 = st.columns([1,6,1])  # Adjust the ratio as needed for better centering
             with col2:
                 st.plotly_chart(plot12())
-            st.markdown("<hr>", unsafe_allow_html=True)
-            st.write("The pie chart shows the relationship between sleep quality and heart rate among surveyed individuals. The data suggests that individuals with poor sleep quality have higher heart rates than those with good sleep quality. The pie chart provides insights into the relationship between sleep quality and heart rate.")
-            code_text = """
+                st.markdown("<hr>", unsafe_allow_html=True)
+                st.write("The pie chart shows the relationship between sleep quality and heart rate among surveyed individuals. The data suggests that individuals with poor sleep quality have higher heart rates than those with good sleep quality. The pie chart provides insights into the relationship between sleep quality and heart rate.")
+                code_text = """
 
 import pandas as pd
 import plotly.express as px
@@ -722,9 +723,9 @@ def plot12():
             col1, col2, col3 = st.columns([1,6,1])  # Adjust the ratio as needed for better centering
             with col2:
                 st.plotly_chart(plot13())
-            st.markdown("<hr>", unsafe_allow_html=True)
-            st.write("The chart shows the distribution of quality of sleep among surveyed individuals. The data suggests that most individuals have good quality sleep, followed by fair quality sleep. The pie chart provides insights into the distribution of quality of sleep.")
-            code_text = """
+                st.markdown("<hr>", unsafe_allow_html=True)
+                st.write("The chart shows the distribution of quality of sleep among surveyed individuals. The data suggests that most individuals have good quality sleep, followed by fair quality sleep. The pie chart provides insights into the distribution of quality of sleep.")
+                code_text = """
 import pandas as pd
 import plotly.express as px
 
@@ -770,9 +771,9 @@ def plot13():
             col1, col2, col3 = st.columns([1,6,1])  # Adjust the ratio as needed for better centering
             with col2:
                 st.plotly_chart(plot6())
-            st.markdown("<hr>", unsafe_allow_html=True)
-            st.write("The plot shows the relationship between BMI category and heart rate. The data suggests that individuals in the obese category have the highest heart rate, followed by the overweight category. The normal weight and normal categories have similar heart rates. This bar chart provides insights into the relationship between BMI category and heart rate.")
-            code_text = """
+                st.markdown("<hr>", unsafe_allow_html=True)
+                st.write("The plot shows the relationship between BMI category and heart rate. The data suggests that individuals in the obese category have the highest heart rate, followed by the overweight category. The normal weight and normal categories have similar heart rates. This bar chart provides insights into the relationship between BMI category and heart rate.")
+                code_text = """
 import plotly.express as px
 import pandas as pd
 
@@ -819,9 +820,9 @@ def plot6():
             col1, col2, col3 = st.columns([1,6,1])  # Adjust the ratio as needed for better centering
             with col2:
                 st.plotly_chart(plot8())
-            st.markdown("<hr>", unsafe_allow_html=True)
-            st.write("The plot depicts the relationship between daily steps, age, and gender. It likely stems from a health or fitness study that tracked daily steps taken by participants of different ages and genders. The data is visualized using two elements. The first element is colored lines which separate trend lines are shown for each gender, colored light blue possibly for males and salmon possibly for females. The second element is data points.")
-            code_text = """
+                st.markdown("<hr>", unsafe_allow_html=True)
+                st.write("The plot depicts the relationship between daily steps, age, and gender. It likely stems from a health or fitness study that tracked daily steps taken by participants of different ages and genders. The data is visualized using two elements. The first element is colored lines which separate trend lines are shown for each gender, colored light blue possibly for males and salmon possibly for females. The second element is data points.")
+                code_text = """
 import plotly.express as px
 import pandas as pd
 
@@ -856,9 +857,9 @@ def plot8():
             col1, col2, col3 = st.columns([1,6,1])  # Adjust the ratio as needed for better centering
             with col2:
                 st.plotly_chart(plot9())
-            st.markdown("<hr>", unsafe_allow_html=True)
-            st.write("This violin plot, generated using ggplot2 in R, provides insights into the distribution of daily steps taken by individuals categorized by gender in the provided dataset. First, the distribution of the violin plots suggests a possible difference in the distribution of daily steps between genders. While the medians might be visually similar, the shapes of the violins hint at potential variations. Second, the spread of wider spread of the female violin might indicate greater variability in daily steps among females compared to males. ")
-            code_text = """
+                st.markdown("<hr>", unsafe_allow_html=True)
+                st.write("This violin plot, generated using ggplot2 in R, provides insights into the distribution of daily steps taken by individuals categorized by gender in the provided dataset. First, the distribution of the violin plots suggests a possible difference in the distribution of daily steps between genders. While the medians might be visually similar, the shapes of the violins hint at potential variations. Second, the spread of wider spread of the female violin might indicate greater variability in daily steps among females compared to males. ")
+                code_text = """
 import plotly.express as px
 import pandas as pd
 
